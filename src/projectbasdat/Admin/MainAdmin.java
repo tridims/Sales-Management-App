@@ -139,7 +139,7 @@ public class MainAdmin extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nama", "Tanggal Lahir", "Nomor HP", "Email", "Alamat", "Jenis Kelamin", "Cabang", "Jabatan", "Gaji"
+                "Nama", "Jenis Kelamin", "Tanggal Lahir", "Nomor HP", "Email", "Alamat", "Jabatan", "Cabang", "Gaji"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
