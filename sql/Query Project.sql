@@ -18,7 +18,7 @@ create table kategori (
 
 create table produk (
     product_id int primary key identity(1,1),
-    nama_produk varchar(40) not null,
+    nama_produk varchar(255) not null,
     jumlah_stok int not null default 0,
     harga_satuan int not null,
     deskripsi text,
@@ -40,6 +40,7 @@ create table jabatan(
 create table karyawan (
     id_karyawan int primary key identity(1,1),
     nama varchar(50) not null,
+    jenis_kelamin char not null,
     tanggal_lahir date not null,
     nomor_hp varchar(25) not null,
     email varchar(50) not null,
@@ -48,8 +49,14 @@ create table karyawan (
     jabatan varchar(30) foreign key references jabatan(nama_jabatan) on delete set null
 )
 
-create table customer_profile (
+create table customer_account (
     id_pelanggan int primary key identity(1,1),
+    email varchar(50) not null,
+    password varchar(50) not null,
+)
+
+create table customer_profile (
+    id_pelanggan int primary key,
     nama_pelanggan varchar(50) not null,
     tanggal_lahir date not null,
     nomor_hp varchar(25) not null,
@@ -59,13 +66,8 @@ create table customer_profile (
     jalan varchar(30) not null,
     jenis_kelamin char not null,
     kode_pos varchar(5) not null
-)
 
-create table customer_account (
-    id_pelanggan int primary key,
-    email varchar(50) not null,
-    password varchar(50) not null,
-    foreign key (id_pelanggan) references customer_profile(id_pelanggan) on delete cascade
+    foreign key (id_pelanggan) references customer_account(id_pelanggan) on delete cascade
 )
 
 create table supplier (
@@ -92,7 +94,7 @@ create table order_product (
     status_order bit not null default 0,
     id_pelanggan int not null,
     id_karyawan int,
-    foreign key (id_pelanggan) references customer_profile(id_pelanggan) on delete cascade,
+    foreign key (id_pelanggan) references customer_account(id_pelanggan) on delete cascade,
     foreign key (id_karyawan) references karyawan(id_karyawan) on delete set null,
 )
 
