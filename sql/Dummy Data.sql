@@ -30,11 +30,11 @@ insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition
 insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori) values ('Apel', 15, 30000, 'apel segar dan sehat', 'vitamin a,c,k', 'buah');
 
 -- TABEL SUPPLIED_PRODUCT
-insert into supplied_product values (1, 1, 50);
-insert into supplied_product values (2, 2, 25);
-insert into supplied_product values (3, 3, 45);
-insert into supplied_product values (4, 4, 10);
-insert into supplied_product values (5, 5, 15);
+insert into supplied_product values (1, 1, 50, '2020-12-31');
+insert into supplied_product values (2, 2, 25, '2020-12-31');
+insert into supplied_product values (3, 3, 45, '2020-12-31');
+insert into supplied_product values (4, 4, 10, '2020-12-31');
+insert into supplied_product values (5, 5, 15, '2020-12-31');
 
 -- TABEL JABATAN
 insert into jabatan values ('Manager', 6000000);
@@ -60,10 +60,10 @@ insert into customer_account values ('samsul@gmail.com', 'samsulpw');
 insert into customer_account values ('paiman@gmail.com', 'paimanpw');
 
 -- TABEL CUSTOMER PROFILE
-insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) values (1 ,'Victoria', '1913-04-02', '0526715754', 8, 'Batu', 'Malang', 'Gang Surapati', 'P', '81124');
-insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) values (2 ,'Paramita', '1920-12-15', '082608102', 99, 'Malang', 'Malang', 'Gang S. Parman', 'P', '51147');
-insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) values (3 ,'Samsul', '1913-04-02', '0351367322', 2, 'Pedungan', 'Denpasar', 'Jl. Jamika', 'L', '80002');
-insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) values (4 ,'Paiman', '1924-09-14', '0886705467', 8, 'Kuningan', 'Jakarta', 'Jl. Medokan Ayu', 'L', '25557');
+insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) values (1 ,'Victoria', '1913-04-02', '0526715754', '8A', 'Batu', 'Malang', 'Gang Surapati', 'P', '81124');
+insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) values (2 ,'Paramita', '1920-12-15', '082608102', '99', 'Malang', 'Malang', 'Gang S. Parman', 'P', '51147');
+insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) values (3 ,'Samsul', '1913-04-02', '0351367322', '2C', 'Pedungan', 'Denpasar', 'Jl. Jamika', 'L', '80002');
+insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) values (4 ,'Paiman', '1924-09-14', '0886705467', '8F', 'Kuningan', 'Jakarta', 'Jl. Medokan Ayu', 'L', '25557');
 
 -- TABEL ORDER_PRODUCT
 insert into order_product (tanggal_kirim, status_order, id_pelanggan, id_karyawan) values ('2021-05-11', 1, 1, 2)

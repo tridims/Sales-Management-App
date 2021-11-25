@@ -59,7 +59,7 @@ create table customer_profile (
     nama_pelanggan varchar(255) not null,
     tanggal_lahir date not null,
     nomor_hp varchar(25) not null,
-    nomor_rumah int not null,
+    nomor_rumah varchar(5) not null,
     desa_kecamatan varchar(50) not null,
     kabupaten_kota varchar(50) not null,
     jalan varchar(50) not null,
@@ -82,6 +82,7 @@ create table supplied_product (
     product_id int not null,
     id_supplier int,
     jumlah_produk int not null,
+    tanggal date not null,
     primary key (product_id, id_supplier),
     foreign key (product_id) references produk(product_id) on delete cascade,
     foreign key (id_supplier) references supplier(id_supplier) on delete no action
