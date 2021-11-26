@@ -4,17 +4,26 @@
  */
 package projectbasdat.Admin;
 
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author tridi
  */
 public class TambahCabang extends javax.swing.JFrame {
-
+    MainAdmin parentFrame;
     /**
      * Creates new form TambahCabang
      */
     public TambahCabang() {
         initComponents();
+    }
+    
+    public TambahCabang(MainAdmin ma) {
+        initComponents();
+        this.parentFrame = ma;
     }
 
     /**
@@ -28,12 +37,12 @@ public class TambahCabang extends javax.swing.JFrame {
 
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        textNewNamaCabang = new javax.swing.JTextField();
-        textNewAlamatCabang = new javax.swing.JTextField();
+        textNamaCabang = new javax.swing.JTextField();
+        textAlamatCabang = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        buttonNewAccount = new javax.swing.JButton();
+        buttonTambahCabang = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel4.setText("Cabang Baru");
 
@@ -41,10 +50,10 @@ public class TambahCabang extends javax.swing.JFrame {
 
         jLabel7.setText("Alamat Cabang");
 
-        buttonNewAccount.setText("Tambah");
-        buttonNewAccount.addActionListener(new java.awt.event.ActionListener() {
+        buttonTambahCabang.setText("Tambah");
+        buttonTambahCabang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonNewAccountActionPerformed(evt);
+                buttonTambahCabangActionPerformed(evt);
             }
         });
 
@@ -55,7 +64,7 @@ public class TambahCabang extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonNewAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(buttonTambahCabang, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -65,8 +74,8 @@ public class TambahCabang extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textNewNamaCabang)
-                            .addComponent(textNewAlamatCabang))))
+                            .addComponent(textNamaCabang)
+                            .addComponent(textAlamatCabang))))
                 .addGap(32, 32, 32))
         );
         layout.setVerticalGroup(
@@ -76,24 +85,40 @@ public class TambahCabang extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textNewNamaCabang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textNamaCabang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(textNewAlamatCabang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textAlamatCabang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
-                .addComponent(buttonNewAccount)
+                .addComponent(buttonTambahCabang)
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonNewAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewAccountActionPerformed
-        
-    }//GEN-LAST:event_buttonNewAccountActionPerformed
+    private void buttonTambahCabangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahCabangActionPerformed
+        try {
+            String nama = textNamaCabang.getText();
+            String alamat = textAlamatCabang.getText();
+            
+            parentFrame.getDatabaseTools().runUpdateQuery(String.format("exec new_cabang '%s', '%s'", nama, alamat));
+            JOptionPane.showMessageDialog(null, "Berhasil");
+            parentFrame.refresh();
+            close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+    }//GEN-LAST:event_buttonTambahCabangActionPerformed
 
+    private void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -130,11 +155,11 @@ public class TambahCabang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonNewAccount;
+    private javax.swing.JButton buttonTambahCabang;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField textNewAlamatCabang;
-    private javax.swing.JTextField textNewNamaCabang;
+    private javax.swing.JTextField textAlamatCabang;
+    private javax.swing.JTextField textNamaCabang;
     // End of variables declaration//GEN-END:variables
 }

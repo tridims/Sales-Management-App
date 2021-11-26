@@ -7,8 +7,8 @@ as
 select k.id_karyawan, k.nama, k.jenis_kelamin, k.tanggal_lahir, k.nomor_hp, k.email, k.alamat, k.jabatan,
     c.nama_cabang, j.gaji
 from karyawan k
-join cabang c on k.id_cabang=c.id_cabang
-join jabatan j on j.nama_jabatan=k.jabatan
+left outer join cabang c on k.id_cabang=c.id_cabang
+left outer join jabatan j on j.nama_jabatan=k.jabatan
 go
 
 exec get_data_karyawan
@@ -134,3 +134,19 @@ as
 delete from produk where product_id = @id
 go
 exec delete_product 1
+
+-- cabang baru
+go
+create procedure new_cabang
+    @nama varchar(100),
+    @alamat text
+as
+insert into cabang values (@nama, @alamat)
+go
+
+exec new_cabang 'test2', 'test2'
+
+-- delete cabang
+delete from cabang where id_cabang = 4
+
+select * from karyawan

@@ -663,11 +663,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tambah Cabang"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonTambahCabangActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonHapusCabang">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hapus Cabang"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonHapusCabangActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

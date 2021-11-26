@@ -404,8 +404,18 @@ public class MainAdmin extends javax.swing.JFrame {
         jLabel10.setText("Karyawan");
 
         buttonTambahCabang.setText("Tambah Cabang");
+        buttonTambahCabang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahCabangActionPerformed(evt);
+            }
+        });
 
         buttonHapusCabang.setText("Hapus Cabang");
+        buttonHapusCabang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusCabangActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -666,6 +676,15 @@ public class MainAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Gagal menghapus: kemungkinan ada supplier atau order yang mereferensi produk ini");
         }
     }//GEN-LAST:event_buttonHapusProdukActionPerformed
+
+    private void buttonTambahCabangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahCabangActionPerformed
+        TambahCabang tc = new TambahCabang(this);
+        tc.setVisible(true);
+    }//GEN-LAST:event_buttonTambahCabangActionPerformed
+
+    private void buttonHapusCabangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusCabangActionPerformed
+        
+    }//GEN-LAST:event_buttonHapusCabangActionPerformed
 
     private void resetDetailProduk() {
         textNamaProduk.setText("");
