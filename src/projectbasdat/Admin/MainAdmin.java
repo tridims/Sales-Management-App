@@ -68,6 +68,22 @@ public class MainAdmin extends javax.swing.JFrame {
                 }
             }
         });
+        
+        // Listener untuk tabel daftar produk
+        ListSelectionModel modelTabelDaftarProduk = tableDaftarProduk.getSelectionModel();
+        modelTabelDaftarProduk.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                if (!modelTabelDaftarProduk.isSelectionEmpty()) {
+                    int index = modelTabelDaftarProduk.getMinSelectionIndex();
+                    String id = daftarIdProduk.get(index);
+                    populateDetailProduk(id);
+                }
+            }
+        });
+
+        
+        //populateDetailProduk
     }
 
     /**
@@ -122,7 +138,6 @@ public class MainAdmin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         textHargaProduk = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        textKategoriProduk = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         textDeskripsiProduk = new javax.swing.JTextArea();
@@ -132,6 +147,7 @@ public class MainAdmin extends javax.swing.JFrame {
         buttonEditDetailProduk = new javax.swing.JButton();
         buttonTambahProduk = new javax.swing.JButton();
         buttonHapusProduk = new javax.swing.JButton();
+        comboBoxKategori = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Aplikasi Admin");
@@ -454,18 +470,26 @@ public class MainAdmin extends javax.swing.JFrame {
 
         jLabel3.setText("Nama Produk");
 
+        textNamaProduk.setEditable(false);
+
+        textJumlahStokProduk.setEditable(false);
+
         jLabel4.setText("Jumlah Stok");
 
         jLabel5.setText("Harga");
+
+        textHargaProduk.setEditable(false);
 
         jLabel6.setText("Kategori");
 
         jLabel7.setText("Deskripsi");
 
+        textDeskripsiProduk.setEditable(false);
         textDeskripsiProduk.setColumns(20);
         textDeskripsiProduk.setRows(5);
         jScrollPane8.setViewportView(textDeskripsiProduk);
 
+        textNutrisiProduk.setEditable(false);
         textNutrisiProduk.setColumns(20);
         textNutrisiProduk.setRows(5);
         jScrollPane9.setViewportView(textNutrisiProduk);
@@ -473,6 +497,11 @@ public class MainAdmin extends javax.swing.JFrame {
         jLabel8.setText("Nutrisi");
 
         buttonEditDetailProduk.setText("Edit");
+        buttonEditDetailProduk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditDetailProdukActionPerformed(evt);
+            }
+        });
 
         buttonTambahProduk.setText("Tambah Produk");
 
@@ -513,12 +542,11 @@ public class MainAdmin extends javax.swing.JFrame {
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(37, 37, 37)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(buttonEditDetailProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jScrollPane8)
-                                        .addComponent(textKategoriProduk)
-                                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jScrollPane8)
+                                    .addComponent(jScrollPane9)
+                                    .addComponent(comboBoxKategori, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(102, 102, 102))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -542,9 +570,9 @@ public class MainAdmin extends javax.swing.JFrame {
                             .addComponent(textHargaProduk)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textKategoriProduk)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -553,7 +581,7 @@ public class MainAdmin extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(69, 69, 69)
+                        .addGap(92, 92, 92)
                         .addComponent(buttonEditDetailProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -579,6 +607,68 @@ public class MainAdmin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonEditDetailProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditDetailProdukActionPerformed
+        // TODO add your handling code here:
+        if (buttonEditDetailProduk.getText().equals("Edit")) {
+            textNamaProduk.setEditable(true);
+            textJumlahStokProduk.setEditable(true);
+            textHargaProduk.setEditable(true);
+            textDeskripsiProduk.setEditable(true);
+            textNutrisiProduk.setEditable(true);
+            comboBoxKategori.setEditable(true);
+            
+            buttonEditDetailProduk.setText("Simpan");
+        } else {
+            textNamaProduk.setEditable(false);
+            textJumlahStokProduk.setEditable(false);
+            textHargaProduk.setEditable(false);
+            textDeskripsiProduk.setEditable(false);
+            textNutrisiProduk.setEditable(false);
+            comboBoxKategori.setEditable(false);
+            
+            // edit recordnya
+            editRecordDetailProduct();
+            
+            buttonEditDetailProduk.setText("Edit");
+            resetDetailProduk();
+            
+            populateTableDaftarProduk();
+        }
+    }//GEN-LAST:event_buttonEditDetailProdukActionPerformed
+
+    private void resetDetailProduk() {
+        textNamaProduk.setText("");
+        textJumlahStokProduk.setText("");
+        textHargaProduk.setText("");
+        textDeskripsiProduk.setText("");
+        textNutrisiProduk.setText("");
+        comboBoxKategori.setSelectedItem(null);
+    }
+    
+    private void editRecordDetailProduct() {
+        String nama = textNamaProduk.getText();
+        String jumlah = textJumlahStokProduk.getText();
+        String harga = textHargaProduk.getText();
+        String deskripsi = textDeskripsiProduk.getText();
+        String nutrisi = textNutrisiProduk.getText();
+        String kategori = comboBoxKategori.getSelectedItem().toString();
+        
+        int index = tableDaftarProduk.getSelectionModel().getMinSelectionIndex();
+        String id = daftarIdProduk.get(index);
+        
+        try {
+            String query = String.format("exec update_detail_product\n" +
+            "%s, '%s', %s, %s, '%s', '%s', '%s'", id, nama, jumlah, harga, deskripsi, nutrisi, kategori);
+            db.runUpdateQuery(query);
+            
+            JOptionPane.showMessageDialog(null, "Berhasil");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal mengupdate");
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -778,6 +868,40 @@ public class MainAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ada error mengisi tabel daftar produk!");
         }
     }
+    
+    private void populateDetailProduk(String id) {
+        try {
+            String query = String.format("exec get_detail_produk %s", id);
+//            System.out.println(query);
+            ResultSet rs = db.runQuery(query);
+            populateComboBoxKategori();
+            
+            rs.next();
+            textNamaProduk.setText(rs.getString("nama_produk"));
+            textJumlahStokProduk.setText(rs.getString("jumlah_stok"));
+            textHargaProduk.setText(rs.getString("harga_satuan"));
+            textDeskripsiProduk.setText(rs.getString("deskripsi"));
+            textNutrisiProduk.setText(rs.getString("nutrition_facts"));
+            comboBoxKategori.setSelectedItem(rs.getString("kategori"));
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ada error mendapat data");
+            e.printStackTrace();
+        }
+    }
+    
+    private void populateComboBoxKategori() {
+        try {
+            comboBoxKategori.removeAllItems();
+            ResultSet rs = db.runQuery("select * from kategori");
+            
+            while (rs.next()) {
+                comboBoxKategori.addItem(rs.getString("nama_kategori"));
+            }
+
+        } catch (Exception e) {
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonEditDataSupplier;
@@ -795,6 +919,7 @@ public class MainAdmin extends javax.swing.JFrame {
     private javax.swing.JButton buttonTambahPelanggan;
     private javax.swing.JButton buttonTambahProduk;
     private javax.swing.JButton buttonTambahSupplier;
+    private javax.swing.JComboBox<String> comboBoxKategori;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -830,7 +955,6 @@ public class MainAdmin extends javax.swing.JFrame {
     private javax.swing.JTextArea textDeskripsiProduk;
     private javax.swing.JTextField textHargaProduk;
     private javax.swing.JTextField textJumlahStokProduk;
-    private javax.swing.JTextField textKategoriProduk;
     private javax.swing.JTextField textNamaProduk;
     private javax.swing.JTextArea textNutrisiProduk;
     // End of variables declaration//GEN-END:variables

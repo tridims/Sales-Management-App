@@ -77,3 +77,36 @@ join jabatan j on k.jabatan=j.nama_jabatan
 where k.id_cabang = @idCabang
 go
 exec get_karyawan_at_cabang 1
+
+-- detail produk
+go
+create procedure get_detail_produk @idProduk int
+as
+select nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori from produk
+where produk.product_id = @idProduk
+go
+exec get_detail_produk 1
+
+-- update detail product
+go
+create procedure update_detail_product 
+    @id int,
+    @nama varchar(255),
+    @jumlah int,
+    @harga int,
+    @desc text,
+    @nutrition text,
+    @kat varchar(100)
+as
+update produk
+set nama_produk = @nama, 
+    jumlah_stok = @jumlah, 
+    harga_satuan = @harga, 
+    deskripsi = @desc,
+    nutrition_facts = @nutrition, 
+    kategori = @kat
+where product_id = @id
+
+go
+
+select * from produk

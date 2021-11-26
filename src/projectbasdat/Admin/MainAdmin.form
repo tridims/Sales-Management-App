@@ -719,13 +719,11 @@
                                           <Component id="jLabel8" alignment="0" min="-2" pref="113" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="buttonEditDetailProduk" min="-2" pref="126" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jScrollPane8" max="32767" attributes="0"/>
-                                              <Component id="textKategoriProduk" max="32767" attributes="0"/>
-                                              <Component id="jScrollPane9" min="-2" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="jScrollPane8" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane9" max="32767" attributes="0"/>
+                                          <Component id="comboBoxKategori" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -759,9 +757,9 @@
                                   <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="textKategoriProduk" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel6" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="comboBoxKategori" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -770,10 +768,10 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel8" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" pref="23" max="-2" attributes="0"/>
                                   <Component id="jScrollPane9" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
                               <Component id="buttonEditDetailProduk" min="-2" pref="32" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -847,8 +845,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textNamaProduk">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textJumlahStokProduk">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
@@ -861,13 +865,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="textHargaProduk">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Kategori"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="textKategoriProduk">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
@@ -883,6 +888,7 @@
               <SubComponents>
                 <Component class="javax.swing.JTextArea" name="textDeskripsiProduk">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
@@ -898,6 +904,7 @@
               <SubComponents>
                 <Component class="javax.swing.JTextArea" name="textNutrisiProduk">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
@@ -913,6 +920,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Edit"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditDetailProdukActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonTambahProduk">
               <Properties>
@@ -923,6 +933,16 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hapus Produk"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="comboBoxKategori">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
