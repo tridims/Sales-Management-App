@@ -4,6 +4,7 @@
  */
 package projectbasdat.Admin;
 
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -45,7 +46,8 @@ public class LoginAdmin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         textLogin = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Login Admin");
 
         jLabel1.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -105,6 +107,7 @@ public class LoginAdmin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void textLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLoginActionPerformed
@@ -114,6 +117,8 @@ public class LoginAdmin extends javax.swing.JFrame {
         
         if (username.equals(db.getUser()) && password.equals(db.getPassword())) {
             System.out.println("Berhasil Login");
+            MainAdmin.main(null);
+            close();
         } else {
             JOptionPane.showMessageDialog(null, "Username & Password Salah");
         }
@@ -152,6 +157,11 @@ public class LoginAdmin extends javax.swing.JFrame {
                 new LoginAdmin().setVisible(true);
             }
         });
+    }
+    
+    private void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

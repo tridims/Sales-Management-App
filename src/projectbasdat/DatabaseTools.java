@@ -48,7 +48,7 @@ public class DatabaseTools {
         return rs;
     }
     
-    public void runUpdateQuery(String query) throws  SQLException {
+    public void runUpdateQuery(String query) throws SQLException {
         Statement st = connection.createStatement();
         st.executeUpdate(query);
     }
