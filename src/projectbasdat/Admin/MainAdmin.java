@@ -24,6 +24,9 @@ public class MainAdmin extends javax.swing.JFrame {
     DatabaseTools db = new DatabaseTools();
     ArrayList<String> daftarIdPelanggan, daftarIdKaryawan, daftarIdSupplier, daftarIdCabang, daftarIdProduk;
 
+    public DatabaseTools getDatabaseTools() {
+        return db;
+    }
     
     /**
      * Creates new form Main
@@ -504,6 +507,11 @@ public class MainAdmin extends javax.swing.JFrame {
         });
 
         buttonTambahProduk.setText("Tambah Produk");
+        buttonTambahProduk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahProdukActionPerformed(evt);
+            }
+        });
 
         buttonHapusProduk.setText("Hapus Produk");
 
@@ -636,6 +644,11 @@ public class MainAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonEditDetailProdukActionPerformed
 
+    private void buttonTambahProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahProdukActionPerformed
+        TambahProduk tp = new TambahProduk(this);
+        tp.setVisible(true);
+    }//GEN-LAST:event_buttonTambahProdukActionPerformed
+
     private void resetDetailProduk() {
         textNamaProduk.setText("");
         textJumlahStokProduk.setText("");
@@ -668,6 +681,13 @@ public class MainAdmin extends javax.swing.JFrame {
         }
     }
     
+    public void refresh() {
+        populateTableDaftarPelanggan();
+        populateTableDaftarKaryawan();
+        populateTableSupplier();
+        populateTableCabang();
+        populateTableDaftarProduk();
+    }
     
     /**
      * @param args the command line arguments

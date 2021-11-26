@@ -109,4 +109,20 @@ where product_id = @id
 
 go
 
-select * from produk
+exec update_detail_product
+1, 'buah sembarang', 200, 3000, 'testing desc', 'text nutri', 'sayur'
+
+-- tambah produk baru
+go
+create proc new_product 
+    @nama varchar(255),
+    @jumlah int,
+    @harga int,
+    @desc text,
+    @nutrition text,
+    @kat varchar(100)
+as
+insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori) 
+values (@nama, @jumlah, @harga, @desc, @nutrition, @kat);
+go
+exec new_product 'Pisang Bali', 100, 20000, 'pisang enak', 'potasium', 'buah'

@@ -4,17 +4,29 @@
  */
 package projectbasdat.Admin;
 
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author tridi
  */
 public class TambahProduk extends javax.swing.JFrame {
+    MainAdmin parentFrame;
 
     /**
      * Creates new form TambahProduk
      */
     public TambahProduk() {
         initComponents();
+    }
+    
+    public TambahProduk(MainAdmin ma) {
+        initComponents();
+        this.parentFrame = ma;
+        populateCB();
     }
 
     /**
@@ -44,7 +56,8 @@ public class TambahProduk extends javax.swing.JFrame {
         textJumlahStok = new javax.swing.JTextField();
         textHarga = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tambah Produk");
 
         textDeskripsi.setColumns(20);
         textDeskripsi.setRows(5);
@@ -155,14 +168,50 @@ public class TambahProduk extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void populateCB() {
+        try {
+            cbKategori.removeAllItems();
+            ResultSet rs = parentFrame.getDatabaseTools().runQuery("select * from kategori");
+            
+            while (rs.next()) {
+                cbKategori.addItem(rs.getString("nama_kategori"));
+            }
+
+        } catch (Exception e) {
+        }
+    }
+    
+    private void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+    }
+    
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        String nama = textNamaProduk.getText();
+        String jumlah = textJumlahStok.getText();
+        String harga = textHarga.getText();
+        String deskripsi = textDeskripsi.getText();
+        String nutrisi = textKandunganNutrisi.getText();
+        String kategori = cbKategori.getSelectedItem().toString();
         
+        try {
+            String qr = String.format("exec new_product '%s', %s, %s, '%s', '%s', '%s'",
+                    nama, jumlah, harga, deskripsi, nutrisi, kategori);
+            parentFrame.getDatabaseTools().runUpdateQuery(qr);
+            JOptionPane.showMessageDialog(null, "Berhasil");
+            parentFrame.refresh();
+            close();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error");
+        }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
-        
+        close();
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     /**

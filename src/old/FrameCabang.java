@@ -255,6 +255,11 @@ public class FrameCabang extends javax.swing.JFrame {
                 exitButtonMouseClicked(evt);
             }
         });
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Cabang Baru");
 
@@ -457,6 +462,10 @@ public class FrameCabang extends javax.swing.JFrame {
         tableAccount.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(search));
     }//GEN-LAST:event_textSearchKeyReleased
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
      * @param args the command line arguments
