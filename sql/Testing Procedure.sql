@@ -126,3 +126,11 @@ insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition
 values (@nama, @jumlah, @harga, @desc, @nutrition, @kat);
 go
 exec new_product 'Pisang Bali', 100, 20000, 'pisang enak', 'potasium', 'buah'
+
+-- delete product
+go
+create procedure delete_product @id int
+as
+delete from produk where product_id = @id
+go
+exec delete_product 1

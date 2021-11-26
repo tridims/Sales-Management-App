@@ -514,6 +514,11 @@ public class MainAdmin extends javax.swing.JFrame {
         });
 
         buttonHapusProduk.setText("Hapus Produk");
+        buttonHapusProduk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusProdukActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -649,6 +654,19 @@ public class MainAdmin extends javax.swing.JFrame {
         tp.setVisible(true);
     }//GEN-LAST:event_buttonTambahProdukActionPerformed
 
+    private void buttonHapusProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusProdukActionPerformed
+        int index = tableDaftarProduk.getSelectionModel().getMinSelectionIndex();
+        String id = daftarIdProduk.get(index);
+        
+        try {
+            db.runUpdateQuery(String.format("exec delete_product %s", id));
+            refresh();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus: kemungkinan ada supplier atau order yang mereferensi produk ini");
+        }
+    }//GEN-LAST:event_buttonHapusProdukActionPerformed
+
     private void resetDetailProduk() {
         textNamaProduk.setText("");
         textJumlahStokProduk.setText("");
@@ -687,6 +705,8 @@ public class MainAdmin extends javax.swing.JFrame {
         populateTableSupplier();
         populateTableCabang();
         populateTableDaftarProduk();
+        
+        resetDetailProduk();
     }
     
     /**
