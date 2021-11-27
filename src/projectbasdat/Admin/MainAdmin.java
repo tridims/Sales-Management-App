@@ -22,7 +22,8 @@ import projectbasdat.DatabaseTools;
 public class MainAdmin extends javax.swing.JFrame {
 
     DatabaseTools db = new DatabaseTools();
-    ArrayList<String> daftarIdPelanggan, daftarIdKaryawan, daftarIdSupplier, daftarIdCabang, daftarIdProduk;
+    ArrayList<String> daftarIdPelanggan, daftarIdKaryawan, daftarIdSupplier, 
+            daftarIdCabang, daftarIdProduk, daftarIdSuppliedProduct;
 
     public DatabaseTools getDatabaseTools() {
         return db;
@@ -33,11 +34,7 @@ public class MainAdmin extends javax.swing.JFrame {
      */
     public MainAdmin() {
         initComponents();
-        populateTableDaftarPelanggan();
-        populateTableDaftarKaryawan();
-        populateTableSupplier();
-        populateTableCabang();
-        populateTableDaftarProduk();
+        refresh();
         
         // closing listener untuk menutup koneksi database
         this.addWindowListener(new WindowAdapter() {
@@ -336,6 +333,11 @@ public class MainAdmin extends javax.swing.JFrame {
         });
 
         buttonHapusDataSupply.setText("Hapus Data Supply");
+        buttonHapusDataSupply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusDataSupplyActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -745,6 +747,18 @@ public class MainAdmin extends javax.swing.JFrame {
         ts.setVisible(true);
     }//GEN-LAST:event_buttonTambahDataSupplyActionPerformed
 
+    private void buttonHapusDataSupplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusDataSupplyActionPerformed
+        String id = daftarIdSuppliedProduct.get(tableDaftarProdukSupply.getSelectionModel().getMinSelectionIndex());
+        
+        try {
+            String query = String.format("exec delete_supplied_product %s", id);
+            db.runUpdateQuery(query);
+            refresh();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error Saat menghapus data");
+        }
+    }//GEN-LAST:event_buttonHapusDataSupplyActionPerformed
+
     private void resetDetailProduk() {
         textNamaProduk.setText("");
         textJumlahStokProduk.setText("");
@@ -912,8 +926,10 @@ public class MainAdmin extends javax.swing.JFrame {
         try {
             String query = String.format("exec get_supplied_product %s", id);
             ResultSet rs = db.runQuery(query);
+            daftarIdSuppliedProduct = new ArrayList();
             
             while (rs.next()) {
+                daftarIdSuppliedProduct.add(rs.getString("id"));
                 tableModel.addRow(new Object[] {
                     rs.getString("nama_produk"),
                     rs.getString("jumlah_produk"),

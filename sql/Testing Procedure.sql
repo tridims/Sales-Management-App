@@ -50,7 +50,7 @@ where id_supplier = @id
 go
 create procedure get_supplied_product @id_supplier int
 as
-select sp.id_supplier, p.nama_produk, sp.jumlah_produk, sp.tanggal
+select sp.id, sp.id_supplier, p.nama_produk, sp.jumlah_produk, sp.tanggal
 from supplied_product sp
 join produk p on p.product_id=sp.product_id
 where sp.id_supplier = @id_supplier
@@ -221,5 +221,28 @@ begin catch
         begin rollback tran end
 end catch
 
+-- menghapus supplied_product
+go
+create procedure delete_supplied_product
+    @id int
+as
+begin tran
+begin try
+    update produk
+    set jumlah_stok = (select iif((jumlah_stok - jumlah_produk)>0, jumlah_stok - jumlah_produk, 0) 
+        from supplied_product where id = @id)
+    where product_id = (select sp.product_id from supplied_product sp where id = @id)
+
+    delete from supplied_product where id = @id;
+
+    if @@trancount > 0
+        begin commit tran end
+end try
+begin catch
+    if @@trancount > 0
+        begin rollback tran end
+end catch
+
+-- exec delete_supplied_product 4
 
 
