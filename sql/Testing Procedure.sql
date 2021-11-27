@@ -197,16 +197,29 @@ delete from supplier where id_supplier = @id
 -- exec delete_supplier 10
 
 
--- menambah supplied_product baru : TambahDataSupply
+-- menambah supplied_product baru : TambahDataSupply : otomatis mengupdate jumlah stok produk di bagian produk
 go
 create procedure add_supplied_product
     @idProduk int,
     @idSupplier int,
     @jumlah int
 as
-insert into supplied_product (product_id, id_supplier, jumlah_produk, tanggal)
-values (@idProduk, @idSupplier, @jumlah, getdate());
+begin tran
+begin try
+    insert into supplied_product (product_id, id_supplier, jumlah_produk, tanggal)
+    values (@idProduk, @idSupplier, @jumlah, getdate());
 
--- exec add_supplied_product 1, 1, 100
+    update produk
+    set jumlah_stok = (jumlah_stok + @jumlah)
+    where product_id = @idProduk
+
+    if @@trancount > 0
+        begin commit tran end
+end try
+begin catch
+    if @@trancount > 0
+        begin rollback tran end
+end catch
+
 
 
