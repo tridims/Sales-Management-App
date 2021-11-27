@@ -109,9 +109,6 @@ where product_id = @id
 
 go
 
-exec update_detail_product
-1, 'buah sembarang', 200, 3000, 'testing desc', 'text nutri', 'sayur'
-
 -- tambah produk baru
 go
 create proc new_product 
@@ -125,7 +122,6 @@ as
 insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori) 
 values (@nama, @jumlah, @harga, @desc, @nutrition, @kat);
 go
-exec new_product 'Pisang Bali', 100, 20000, 'pisang enak', 'potasium', 'buah'
 
 -- delete product
 go
@@ -133,7 +129,6 @@ create procedure delete_product @id int
 as
 delete from produk where product_id = @id
 go
-exec delete_product 1
 
 -- cabang baru
 go
@@ -144,9 +139,9 @@ as
 insert into cabang values (@nama, @alamat)
 go
 
-exec new_cabang 'test2', 'test2'
-
 -- delete cabang
-delete from cabang where id_cabang = 4
+go
+create procedure delete_cabang @id int
+as
+delete from cabang where id_cabang = @id
 
-select * from karyawan

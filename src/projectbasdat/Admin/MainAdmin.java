@@ -683,7 +683,15 @@ public class MainAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTambahCabangActionPerformed
 
     private void buttonHapusCabangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusCabangActionPerformed
-        
+        try {
+            int index = tableDaftarCabang.getSelectionModel().getMinSelectionIndex();
+            String id = daftarIdCabang.get(index);
+            
+            db.runUpdateQuery(String.format("delete_cabang %s", id));
+            refresh();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus");
+        }
     }//GEN-LAST:event_buttonHapusCabangActionPerformed
 
     private void resetDetailProduk() {
