@@ -79,11 +79,12 @@ create table supplier (
 )
 
 create table supplied_product (
+    id int identity(1,1), -- dibuat begini agar supplier bisa mensupply produk yang sama lagi
     product_id int not null,
     id_supplier int,
     jumlah_produk int not null,
     tanggal date not null,
-    primary key (product_id, id_supplier),
+    primary key (id, product_id, id_supplier),
     foreign key (product_id) references produk(product_id) on delete cascade,
     foreign key (id_supplier) references supplier(id_supplier) on delete no action
 )

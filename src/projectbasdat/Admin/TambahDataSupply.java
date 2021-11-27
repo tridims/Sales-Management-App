@@ -4,17 +4,76 @@
  */
 package projectbasdat.Admin;
 
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author tridi
  */
 public class TambahDataSupply extends javax.swing.JFrame {
 
+    private MainAdmin parentForm;
+    private String idSupplier;
+    private ArrayList<String> daftarIdProduk;
+    
     /**
      * Creates new form TambahDataSupply
      */
     public TambahDataSupply() {
         initComponents();
+        getNama();
+    }
+    
+    public TambahDataSupply(MainAdmin parentForm, String idSupplier) {
+        initComponents();
+        this.parentForm = parentForm;
+        this.idSupplier = idSupplier;
+        populateTableProduk();
+        getNama();
+    }
+    
+    private void getNama() {
+        try {
+            String query = String.format("select nama_supplier from supplier where id_supplier = %s", this.idSupplier);
+            ResultSet rs = parentForm.getDatabaseTools().runQuery(query);
+            rs.next();
+            String nama = rs.getString("nama_supplier");
+            System.out.println("Nama Supplier : " + nama);
+            textNama.setText(nama);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal mendapatkan nama supplier");
+        }
+    }
+    
+    private void populateTableProduk() {
+        try {
+            ResultSet rs = parentForm.getDatabaseTools().runQuery("exec get_data_tabel_produk");
+            
+            DefaultTableModel tableModel = (DefaultTableModel)tableProduk.getModel();
+            tableModel.setRowCount(0);
+            daftarIdProduk = new ArrayList();
+            
+            while (rs.next()) {
+                daftarIdProduk.add(rs.getString("product_id"));
+                tableModel.addRow(new Object[] {
+                    rs.getString("nama_produk"),
+                    rs.getString("kategori"),
+                });
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal mendapatkan data produk");
+        }
+    }
+    
+    private void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
 
     /**
@@ -29,15 +88,15 @@ public class TambahDataSupply extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        btnsave = new javax.swing.JButton();
-        btnsave1 = new javax.swing.JButton();
+        buttonSimpan = new javax.swing.JButton();
+        buttonBatal = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableProduk = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
-        txtNama1 = new javax.swing.JTextField();
-        txtNama2 = new javax.swing.JTextField();
+        textNama = new javax.swing.JTextField();
+        textJumlah = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Tambah Data Supply");
@@ -48,27 +107,34 @@ public class TambahDataSupply extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Jumlah");
 
-        btnsave.setText("Simpan");
-        btnsave.addActionListener(new java.awt.event.ActionListener() {
+        buttonSimpan.setText("Simpan");
+        buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsaveActionPerformed(evt);
+                buttonSimpanActionPerformed(evt);
             }
         });
 
-        btnsave1.setText("Batal");
+        buttonBatal.setText("Batal");
+        buttonBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBatalActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableProduk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nama Produk"
+                "Nama Produk", "Kategori"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableProduk);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Produk");
+
+        textNama.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,9 +144,9 @@ public class TambahDataSupply extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(171, 171, 171)
-                        .addComponent(btnsave, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnsave1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(buttonBatal, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,11 +157,11 @@ public class TambahDataSupply extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtNama2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(textJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(38, 38, 38)
-                                    .addComponent(txtNama1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(textNama, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,7 +172,7 @@ public class TambahDataSupply extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtNama1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -114,20 +180,47 @@ public class TambahDataSupply extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(txtNama2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textJumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnsave)
-                    .addComponent(btnsave1))
+                    .addComponent(buttonSimpan)
+                    .addComponent(buttonBatal))
                 .addGap(49, 49, 49))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+    private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
+   
+        ListSelectionModel model = tableProduk.getSelectionModel();
+        int index = model.getMinSelectionIndex();
+        String idProduk = daftarIdProduk.get(index);
+        
+        try {
+            
+            if ((!model.isSelectionEmpty()) && !textJumlah.getText().equals("")) {
+                String query = String.format("exec add_supplied_product %s, %s, %s", 
+                        idProduk, idSupplier, textJumlah.getText());
+                System.out.println("query tambah supplied product :\n " + query);
+                parentForm.getDatabaseTools().runUpdateQuery(query);
+                
+                parentForm.refresh();
+                close();
+                
+            } else {
+               JOptionPane.showMessageDialog(null, "Lengkapi datanya");
+            }
 
-    }//GEN-LAST:event_btnsaveActionPerformed
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error! Perikasa datanya");
+        }
+    }//GEN-LAST:event_buttonSimpanActionPerformed
+
+    private void buttonBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBatalActionPerformed
+        close();
+    }//GEN-LAST:event_buttonBatalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,15 +258,15 @@ public class TambahDataSupply extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnsave;
-    private javax.swing.JButton btnsave1;
+    private javax.swing.JButton buttonBatal;
+    private javax.swing.JButton buttonSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtNama1;
-    private javax.swing.JTextField txtNama2;
+    private javax.swing.JTable tableProduk;
+    private javax.swing.JTextField textJumlah;
+    private javax.swing.JTextField textNama;
     // End of variables declaration//GEN-END:variables
 }

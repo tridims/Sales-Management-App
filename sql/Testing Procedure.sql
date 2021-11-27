@@ -11,7 +11,7 @@ left outer join cabang c on k.id_cabang=c.id_cabang
 left outer join jabatan j on j.nama_jabatan=k.jabatan
 go
 
-exec get_data_karyawan
+-- exec get_data_karyawan
 
 -- mengambil data pelanggan (menu admin)
 go
@@ -24,7 +24,7 @@ from customer_profile cp
 join customer_account ca on cp.id_pelanggan=ca.id_pelanggan
 go
 
-exec get_data_pelanggan
+-- exec get_data_pelanggan
 
 -- mengambil data supplier
 go
@@ -35,7 +35,7 @@ select s.id_supplier, s.nama_supplier, s.alamat, s.nomor_hp, s.email,
 from supplier s
 go
 
-exec get_data_supplier
+-- exec get_data_supplier
 
 -- Mengambil data supplier specific : digunakan untuk mengisi data pada form edit supplier
 go
@@ -44,7 +44,7 @@ as
 select nama_supplier, alamat, nomor_hp, email, kode_pos from supplier
 where id_supplier = @id
 
-exec get_specific_supplier 1
+-- exec get_specific_supplier 1
 
 -- mengambil supplied product dari supplier tertentu
 go
@@ -56,7 +56,7 @@ join produk p on p.product_id=sp.product_id
 where sp.id_supplier = @id_supplier
 go
 
-exec get_supplied_product 2
+-- exec get_supplied_product 2
 
 -- mengambil data cabang (menu admin)
 go
@@ -66,7 +66,7 @@ as
 select id_cabang, nama_cabang, alamat_cabang, (select count(*) from karyawan where karyawan.id_cabang=cabang.id_cabang) as jumlah_karyawan
 from cabang
 go
-exec get_data_cabang
+-- exec get_data_cabang
 
 
 -- mengambil data produk (tabel menu admin)
@@ -75,7 +75,7 @@ create procedure get_data_tabel_produk
 as
 select product_id, nama_produk, jumlah_stok, harga_satuan, kategori from produk
 go
-exec get_data_tabel_produk
+-- exec get_data_tabel_produk
 
 -- mengambil data karyawan pada suatu cabang
 go
@@ -85,7 +85,7 @@ select k.nama, k.jabatan, j.gaji from karyawan k
 join jabatan j on k.jabatan=j.nama_jabatan
 where k.id_cabang = @idCabang
 go
-exec get_karyawan_at_cabang 1
+-- exec get_karyawan_at_cabang 1
 
 -- detail produk
 go
@@ -94,7 +94,7 @@ as
 select nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori from produk
 where produk.product_id = @idProduk
 go
-exec get_detail_produk 1
+-- exec get_detail_produk 1
 
 -- update detail product
 go
@@ -166,7 +166,7 @@ as
 insert into supplier (nama_supplier, alamat, nomor_hp, email, kode_pos) 
 values (@nama, @alamat, @nomor, @email, @pos);
 
-exec new_supplier 'dimas', 'dimas', 'dimas', 'dimas@gmail', '12345'
+-- exec new_supplier 'dimas', 'dimas', 'dimas', 'dimas@gmail', '12345'
 
 -- update data supplier
 go
@@ -194,4 +194,19 @@ create procedure delete_supplier @id int
 as
 delete from supplier where id_supplier = @id
 
-exec delete_supplier 10
+-- exec delete_supplier 10
+
+
+-- menambah supplied_product baru : TambahDataSupply
+go
+create procedure add_supplied_product
+    @idProduk int,
+    @idSupplier int,
+    @jumlah int
+as
+insert into supplied_product (product_id, id_supplier, jumlah_produk, tanggal)
+values (@idProduk, @idSupplier, @jumlah, getdate());
+
+-- exec add_supplied_product 1, 1, 100
+
+

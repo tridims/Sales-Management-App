@@ -329,6 +329,11 @@ public class MainAdmin extends javax.swing.JFrame {
         });
 
         buttonTambahDataSupply.setText("Tambah Data Supply");
+        buttonTambahDataSupply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahDataSupplyActionPerformed(evt);
+            }
+        });
 
         buttonHapusDataSupply.setText("Hapus Data Supply");
 
@@ -734,6 +739,12 @@ public class MainAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonHapusSupplierActionPerformed
 
+    private void buttonTambahDataSupplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahDataSupplyActionPerformed
+        String id = daftarIdSupplier.get(tableDaftarSupplier.getSelectionModel().getMinSelectionIndex());
+        TambahDataSupply ts = new TambahDataSupply(this, id);
+        ts.setVisible(true);
+    }//GEN-LAST:event_buttonTambahDataSupplyActionPerformed
+
     private void resetDetailProduk() {
         textNamaProduk.setText("");
         textJumlahStokProduk.setText("");
@@ -774,6 +785,7 @@ public class MainAdmin extends javax.swing.JFrame {
         populateTableDaftarProduk();
         
         resetDetailProduk();
+        populateTableDaftarProdukSupply(null);
     }
     
     /**
@@ -892,11 +904,14 @@ public class MainAdmin extends javax.swing.JFrame {
     }
     
     private void populateTableDaftarProdukSupply(String id) {
+        DefaultTableModel tableModel = (DefaultTableModel)tableDaftarProdukSupply.getModel();
+        tableModel.setRowCount(0);
+        
+        if (id==null) return;
+        
         try {
             String query = String.format("exec get_supplied_product %s", id);
             ResultSet rs = db.runQuery(query);
-            DefaultTableModel tableModel = (DefaultTableModel)tableDaftarProdukSupply.getModel();
-            tableModel.setRowCount(0);
             
             while (rs.next()) {
                 tableModel.addRow(new Object[] {

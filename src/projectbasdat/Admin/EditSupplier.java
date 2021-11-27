@@ -213,8 +213,6 @@ public class EditSupplier extends javax.swing.JFrame {
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
 
-    
-    
     /**
      * @param args the command line arguments
      */
