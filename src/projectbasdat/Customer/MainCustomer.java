@@ -10,11 +10,17 @@ package projectbasdat.Customer;
  */
 public class MainCustomer extends javax.swing.JFrame {
 
+    private String idPelanggan;
     /**
      * Creates new form Main
      */
     public MainCustomer() {
         initComponents();
+    }
+    
+    public MainCustomer(String idPelanggan) {
+        initComponents();
+        this.idPelanggan = idPelanggan;
     }
 
     /**

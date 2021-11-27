@@ -262,3 +262,30 @@ values (@nama, @jenisKelamin, @tanggalLahir, @nomor, @email, @alamat, @cabang, @
 
 -- exec add_karyawan 'dimastri', 'L', '2000-12-12', '089656565', 'test@gmail.com', 'Malang', 1, 'Manager' 
 
+-- hapus karyawan
+go
+create procedure delete_karyawan @id int
+as
+delete from karyawan where id_karyawan = @id
+
+-- exec delete_karyawan 8
+
+-- update karyawan
+go
+create procedure update_karyawan
+    @id int,
+    @nama varchar(255),
+    @jenisKelamin char(1),
+    @tanggalLahir date,
+    @nomor varchar(25),
+    @email varchar(50),
+    @alamat text,
+    @cabang int,
+    @jabatan varchar(50)
+as
+update karyawan
+set nama = @nama, jenis_kelamin = @jenisKelamin, tanggal_lahir = @tanggalLahir,
+    nomor_hp = @nomor, email = @email, alamat = @alamat, id_cabang = @cabang, jabatan = @jabatan
+where id_karyawan = @id
+
+-- exec update_karyawan 5, 'testing mod', 'L', '2000-12-12', '38473482', 'test@gmail.com', 'batu', 2, 'Kurir'

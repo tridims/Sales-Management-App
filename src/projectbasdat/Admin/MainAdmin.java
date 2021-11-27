@@ -237,8 +237,18 @@ public class MainAdmin extends javax.swing.JFrame {
         });
 
         buttonHapusKaryawan.setText("Hapus Karyawan");
+        buttonHapusKaryawan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusKaryawanActionPerformed(evt);
+            }
+        });
 
         buttonEditKaryawan.setText("Edit Karyawan");
+        buttonEditKaryawan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditKaryawanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -769,6 +779,42 @@ public class MainAdmin extends javax.swing.JFrame {
         tk.setVisible(true);
     }//GEN-LAST:event_buttonTambahKaryawanActionPerformed
 
+    private void buttonHapusKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusKaryawanActionPerformed
+        String id = getIdSelectedKaryawanInTable();
+        
+        if (!(id==null)) {
+            try {
+                String query = String.format("exec delete_karyawan %s", id);
+                db.runUpdateQuery(query);
+                refresh();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "error menghapus");
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_buttonHapusKaryawanActionPerformed
+
+    private void buttonEditKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditKaryawanActionPerformed
+        String id = getIdSelectedKaryawanInTable();
+        
+        if (id != null) {
+            EditKaryawan ek = new EditKaryawan(this, id);
+            ek.setVisible(true);
+        }
+    }//GEN-LAST:event_buttonEditKaryawanActionPerformed
+
+    private String getIdSelectedKaryawanInTable() {
+        ListSelectionModel model = tableDaftarKaryawan.getSelectionModel();
+        
+        if (!model.isSelectionEmpty()) {
+            int index = model.getMinSelectionIndex();
+            String id = daftarIdKaryawan.get(index);
+            return id;
+        }
+        
+        return null;
+    }
+    
     private void resetDetailProduk() {
         textNamaProduk.setText("");
         textJumlahStokProduk.setText("");

@@ -311,11 +311,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hapus Karyawan"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonHapusKaryawanActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonEditKaryawan">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Edit Karyawan"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditKaryawanActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
