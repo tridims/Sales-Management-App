@@ -37,6 +37,15 @@ go
 
 exec get_data_supplier
 
+-- Mengambil data supplier specific : digunakan untuk mengisi data pada form edit supplier
+go
+create procedure get_specific_supplier @id int
+as
+select nama_supplier, alamat, nomor_hp, email, kode_pos from supplier
+where id_supplier = @id
+
+exec get_specific_supplier 1
+
 -- mengambil supplied product dari supplier tertentu
 go
 create procedure get_supplied_product @id_supplier int
@@ -145,3 +154,44 @@ create procedure delete_cabang @id int
 as
 delete from cabang where id_cabang = @id
 
+-- tambah supplier
+go
+create procedure new_supplier
+    @nama varchar(255),
+    @alamat text,
+    @nomor varchar(20),
+    @email varchar(50),
+    @pos varchar(5)
+as
+insert into supplier (nama_supplier, alamat, nomor_hp, email, kode_pos) 
+values (@nama, @alamat, @nomor, @email, @pos);
+
+exec new_supplier 'dimas', 'dimas', 'dimas', 'dimas@gmail', '12345'
+
+-- update data supplier
+go
+create procedure update_supplier
+    @id int,
+    @nama varchar(255),
+    @alamat text,
+    @nomor varchar(20),
+    @email varchar(50),
+    @pos varchar(5)
+as
+update supplier
+set nama_supplier = @nama,
+    alamat = @alamat,
+    nomor_hp = @nomor, 
+    email = @email,
+    kode_pos = @pos
+where id_supplier = @id
+
+-- exec update_supplier 6, 'testing', 'testing', '932438', 'testing@gemail', '12345'
+
+-- menghapus supplier
+go
+create procedure delete_supplier @id int
+as
+delete from supplier where id_supplier = @id
+
+exec delete_supplier 10

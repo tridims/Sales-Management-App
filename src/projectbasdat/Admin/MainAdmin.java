@@ -308,10 +308,25 @@ public class MainAdmin extends javax.swing.JFrame {
         jScrollPane4.setViewportView(tableDaftarProdukSupply);
 
         buttonTambahSupplier.setText("Tambah Supplier");
+        buttonTambahSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahSupplierActionPerformed(evt);
+            }
+        });
 
         buttonEditDataSupplier.setText("Edit Data Supplier");
+        buttonEditDataSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditDataSupplierActionPerformed(evt);
+            }
+        });
 
         buttonHapusSupplier.setText("Hapus Supplier");
+        buttonHapusSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusSupplierActionPerformed(evt);
+            }
+        });
 
         buttonTambahDataSupply.setText("Tambah Data Supply");
 
@@ -693,6 +708,31 @@ public class MainAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Gagal menghapus");
         }
     }//GEN-LAST:event_buttonHapusCabangActionPerformed
+
+    private void buttonTambahSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahSupplierActionPerformed
+        TambahSupplier ts = new TambahSupplier(this);
+        ts.setVisible(true);
+    }//GEN-LAST:event_buttonTambahSupplierActionPerformed
+
+    private void buttonEditDataSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditDataSupplierActionPerformed
+        int index = tableDaftarSupplier.getSelectionModel().getMinSelectionIndex();
+        String id = daftarIdSupplier.get(index);
+        EditSupplier es = new EditSupplier(this, id);
+        es.setVisible(true);
+    }//GEN-LAST:event_buttonEditDataSupplierActionPerformed
+
+    private void buttonHapusSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusSupplierActionPerformed
+        int index = tableDaftarSupplier.getSelectionModel().getMinSelectionIndex();
+        String id = daftarIdSupplier.get(index);
+        
+        try {
+            String query = String.format("exec delete_supplier %s", id);
+            db.runUpdateQuery(query);
+            refresh();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal menghapus");
+        }
+    }//GEN-LAST:event_buttonHapusSupplierActionPerformed
 
     private void resetDetailProduk() {
         textNamaProduk.setText("");

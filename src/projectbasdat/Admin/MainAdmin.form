@@ -482,16 +482,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tambah Supplier"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonTambahSupplierActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonEditDataSupplier">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Edit Data Supplier"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditDataSupplierActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonHapusSupplier">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hapus Supplier"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonHapusSupplierActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonTambahDataSupply">
               <Properties>

@@ -4,18 +4,51 @@
  */
 package projectbasdat.Admin;
 
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author tridi
  */
 public class EditSupplier extends javax.swing.JFrame {
 
+    private MainAdmin parentForm;
+    private String idSupplier;
     /**
      * Creates new form EditSupplier
      */
     public EditSupplier() {
         initComponents();
     }
+    
+    public EditSupplier(MainAdmin parentForm, String idSupplier) {
+        initComponents();
+        this.parentForm = parentForm;
+        this.idSupplier = idSupplier;
+        populateText();
+    }
+    
+    private void populateText() {
+        String query = String.format("exec get_specific_supplier %s", this.idSupplier);
+        try {
+            ResultSet rs = parentForm.getDatabaseTools().runQuery(query);
+            
+            rs.next();
+            textNama.setText(rs.getString("nama_supplier"));
+            textAlamat.setText(rs.getString("alamat"));
+            textNomorHp.setText(rs.getString("nomor_hp"));
+            textEmail.setText(rs.getString("email"));
+            textKodePos.setText(rs.getString("kode_pos"));
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ada error ketika mengambil data Supplier yang dimaksud");
+            close();
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,42 +59,42 @@ public class EditSupplier extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtEmail = new javax.swing.JTextField();
+        textEmail = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtKodePos = new javax.swing.JTextField();
-        btnsave = new javax.swing.JButton();
+        textKodePos = new javax.swing.JTextField();
+        buttonSimpan = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        btnsave1 = new javax.swing.JButton();
-        txtNama = new javax.swing.JTextField();
+        buttonBatal = new javax.swing.JButton();
+        textNama = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtAlamat = new javax.swing.JTextField();
+        textAlamat = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtNomorHP = new javax.swing.JTextField();
+        textNomorHp = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Edit Supplier");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Kode Pos");
 
-        btnsave.setText("Simpan");
-        btnsave.addActionListener(new java.awt.event.ActionListener() {
+        buttonSimpan.setText("Simpan");
+        buttonSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsaveActionPerformed(evt);
+                buttonSimpanActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Nama");
 
-        btnsave1.setText("Batal");
+        buttonBatal.setText("Batal");
+        buttonBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBatalActionPerformed(evt);
+            }
+        });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Edit Supplier");
@@ -86,11 +119,11 @@ public class EditSupplier extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
-                                .addComponent(btnsave, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnsave1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(buttonBatal, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtNomorHP, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textNomorHp, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
@@ -104,10 +137,10 @@ public class EditSupplier extends javax.swing.JFrame {
                                     .addGap(13, 13, 13)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtEmail)
-                                            .addComponent(txtAlamat)
-                                            .addComponent(txtKodePos, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(txtNama, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(textEmail)
+                                            .addComponent(textAlamat)
+                                            .addComponent(textKodePos, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(textNama, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(127, 127, 127)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -121,41 +154,67 @@ public class EditSupplier extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtNomorHP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textNomorHp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtKodePos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textKodePos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnsave)
-                    .addComponent(btnsave1))
+                    .addComponent(buttonSimpan)
+                    .addComponent(buttonBatal))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
+    private void buttonSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSimpanActionPerformed
+        String nama, alamat, nomor, email, pos;
+        nama = textNama.getText();
+        alamat = textAlamat.getText();
+        nomor = textNomorHp.getText();
+        email = textEmail.getText();
+        pos = textKodePos.getText();
+        
+        String query = String.format("exec update_supplier %s, '%s', '%s', '%s', '%s', '%s'", 
+                this.idSupplier,
+                nama, alamat, nomor, email, pos
+                );
+        
+        try {
+            parentForm.getDatabaseTools().runUpdateQuery(query);
+            parentForm.refresh();
+            close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error Update : Periksa data masukan");
+        }
+    }//GEN-LAST:event_buttonSimpanActionPerformed
 
-    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+    private void buttonBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBatalActionPerformed
+        close();
+    }//GEN-LAST:event_buttonBatalActionPerformed
 
-    }//GEN-LAST:event_btnsaveActionPerformed
+    private void close() {
+        WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+    }
 
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -192,18 +251,18 @@ public class EditSupplier extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnsave;
-    private javax.swing.JButton btnsave1;
+    private javax.swing.JButton buttonBatal;
+    private javax.swing.JButton buttonSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField txtAlamat;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtKodePos;
-    private javax.swing.JTextField txtNama;
-    private javax.swing.JTextField txtNomorHP;
+    private javax.swing.JTextField textAlamat;
+    private javax.swing.JTextField textEmail;
+    private javax.swing.JTextField textKodePos;
+    private javax.swing.JTextField textNama;
+    private javax.swing.JTextField textNomorHp;
     // End of variables declaration//GEN-END:variables
 }
