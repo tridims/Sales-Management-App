@@ -230,6 +230,11 @@ public class MainAdmin extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tableDaftarKaryawan);
 
         buttonTambahKaryawan.setText("Tambah Karyawan");
+        buttonTambahKaryawan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahKaryawanActionPerformed(evt);
+            }
+        });
 
         buttonHapusKaryawan.setText("Hapus Karyawan");
 
@@ -758,6 +763,11 @@ public class MainAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error Saat menghapus data");
         }
     }//GEN-LAST:event_buttonHapusDataSupplyActionPerformed
+
+    private void buttonTambahKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahKaryawanActionPerformed
+        TambahKaryawan tk = new TambahKaryawan(this);
+        tk.setVisible(true);
+    }//GEN-LAST:event_buttonTambahKaryawanActionPerformed
 
     private void resetDetailProduk() {
         textNamaProduk.setText("");

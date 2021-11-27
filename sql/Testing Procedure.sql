@@ -245,4 +245,20 @@ end catch
 
 -- exec delete_supplied_product 4
 
+-- tambah karyawan
+go
+create procedure add_karyawan
+    @nama varchar(255),
+    @jenisKelamin char(1),
+    @tanggalLahir date,
+    @nomor varchar(25),
+    @email varchar(50),
+    @alamat text,
+    @cabang int,
+    @jabatan varchar(50)
+as
+insert into karyawan (nama, jenis_kelamin, tanggal_lahir, nomor_hp, email, alamat, id_cabang, jabatan) 
+values (@nama, @jenisKelamin, @tanggalLahir, @nomor, @email, @alamat, @cabang, @jabatan);
+
+-- exec add_karyawan 'dimastri', 'L', '2000-12-12', '089656565', 'test@gmail.com', 'Malang', 1, 'Manager' 
 
