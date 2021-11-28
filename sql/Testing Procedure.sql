@@ -289,3 +289,72 @@ set nama = @nama, jenis_kelamin = @jenisKelamin, tanggal_lahir = @tanggalLahir,
 where id_karyawan = @id
 
 -- exec update_karyawan 5, 'testing mod', 'L', '2000-12-12', '38473482', 'test@gmail.com', 'batu', 2, 'Kurir'
+
+-- mendapatkan data pelanggan spesifik
+go
+create procedure get_specific_pelanggan @id int
+as
+select ca.id_pelanggan, ca.email, ca.[password], cp.nama_pelanggan, cp.tanggal_lahir, cp.nomor_hp, cp.nomor_rumah,
+    cp.desa_kecamatan, cp.kabupaten_kota, cp.jalan, cp.jenis_kelamin, cp.kode_pos
+from customer_account ca
+join customer_profile cp
+on ca.id_pelanggan=cp.id_pelanggan
+where ca.id_pelanggan = @id
+
+-- exec get_specific_pelanggan 1
+
+-- mendapatkan daftar oder dari suatu pelanggan
+go
+create procedure get_order_pelanggan @idPelanggan int
+as
+select order_id, status_order, tanggal_kirim, (select nama from karyawan k where k.id_karyawan=op.id_karyawan) as karyawan
+from order_product op
+where op.id_pelanggan=@idPelanggan
+order by tanggal_kirim asc
+
+-- exec get_order_pelanggan 3
+
+-- mendapatkan daftar produk pada suatu order
+go
+create procedure get_list_product_from_order @orderId int
+as
+select p.nama_produk, p.kategori, op.kuantitas, op.harga_product, s.subtotal
+from ordered_product op
+join produk p on op.product_id=p.product_id
+join subtotal s on op.order_id=s.order_id and op.product_id=s.product_id
+where op.order_id = @orderId
+
+-- exec get_list_product_from_order 3
+
+-- PROCEDURE VAREL
+go
+create procedure get_profil_pelanggan 
+    @email varchar(100), @password varchar(40) 
+as
+select * from customer_account ca join customer_profile cp on ca.id_pelanggan = cp.id_pelanggan
+where email=@email and password=@password
+go
+
+create procedure update_akun_pelanggan 
+    @id int, @email varchar(100), @password varchar(40) 
+as
+update customer_account set email=@email, password=@password
+where id_pelanggan=@id
+
+-- exec update_akun_pelanggan 1, 'test', 'test'
+
+go
+
+create procedure update_profil_pelanggan 
+    @id int, @nama varchar(20), @tgl date, @nomorHp varchar(14), 
+    @nomorRumah varchar (5), @desaKec varchar(30), @kabKota varchar(30), 
+    @jalan varchar(50), @jk varchar(1), @kodePos varchar(10) 
+as
+update customer_profile 
+set nama_pelanggan=@nama, tanggal_lahir=@tgl,
+    nomor_hp=@nomorHp, nomor_rumah=@nomorRumah ,desa_kecamatan=@desaKec,
+    kabupaten_kota=@kabKota, jalan=@jalan, jenis_kelamin=@jk, kode_pos=@kodePos
+where id_pelanggan=@id
+go
+
+-- exec update_profil_pelanggan 1, 'test', '2000-12-12', '93849283', '2B', 'batu', 'malang', 'batu', 'L', '12345'

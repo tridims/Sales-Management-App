@@ -171,6 +171,11 @@ public class MainAdmin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tableDaftarPelanggan);
 
         buttonLihatDetailPelanggan.setText("Lihat Detail Pelanggan");
+        buttonLihatDetailPelanggan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLihatDetailPelangganActionPerformed(evt);
+            }
+        });
 
         buttonTambahPelanggan.setText("Tambah Pelanggan");
 
@@ -803,6 +808,26 @@ public class MainAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonEditKaryawanActionPerformed
 
+    private void buttonLihatDetailPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLihatDetailPelangganActionPerformed
+        String idPelanggan = getIdSelectedPelangganInTable();
+        
+        if (idPelanggan == null) return;
+        
+        Pelanggan p = new Pelanggan(this, idPelanggan);
+        p.setVisible(true);
+    }//GEN-LAST:event_buttonLihatDetailPelangganActionPerformed
+
+    private String getIdSelectedPelangganInTable() {
+        ListSelectionModel model = tableDaftarPelanggan.getSelectionModel();
+        
+        if (!model.isSelectionEmpty()) {
+            int index = model.getMinSelectionIndex();
+            String id = daftarIdPelanggan.get(index);
+            return id;
+        }
+        return null;
+    }
+    
     private String getIdSelectedKaryawanInTable() {
         ListSelectionModel model = tableDaftarKaryawan.getSelectionModel();
         
