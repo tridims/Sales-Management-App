@@ -96,12 +96,14 @@ public class MainAdmin extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDaftarPelanggan = new javax.swing.JTable();
         buttonLihatDetailPelanggan = new javax.swing.JButton();
         buttonTambahPelanggan = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        buttonHapusPelanggan = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDaftarKaryawan = new javax.swing.JTable();
@@ -152,6 +154,19 @@ public class MainAdmin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Aplikasi Admin");
 
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1253, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 674, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Gambaran", jPanel6);
+
         tableDaftarPelanggan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -182,6 +197,13 @@ public class MainAdmin extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Daftar Pelanggan");
 
+        buttonHapusPelanggan.setText("Hapus Pelanggan");
+        buttonHapusPelanggan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusPelangganActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -198,7 +220,9 @@ public class MainAdmin extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(buttonTambahPelanggan)
                                 .addGap(18, 18, 18)
-                                .addComponent(buttonLihatDetailPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(buttonLihatDetailPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonHapusPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -210,7 +234,8 @@ public class MainAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonLihatDetailPelanggan)
-                    .addComponent(buttonTambahPelanggan))
+                    .addComponent(buttonTambahPelanggan)
+                    .addComponent(buttonHapusPelanggan))
                 .addContainerGap())
         );
 
@@ -817,6 +842,10 @@ public class MainAdmin extends javax.swing.JFrame {
         p.setVisible(true);
     }//GEN-LAST:event_buttonLihatDetailPelangganActionPerformed
 
+    private void buttonHapusPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusPelangganActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonHapusPelangganActionPerformed
+
     private String getIdSelectedPelangganInTable() {
         ListSelectionModel model = tableDaftarPelanggan.getSelectionModel();
         
@@ -1129,6 +1158,7 @@ public class MainAdmin extends javax.swing.JFrame {
     private javax.swing.JButton buttonHapusCabang;
     private javax.swing.JButton buttonHapusDataSupply;
     private javax.swing.JButton buttonHapusKaryawan;
+    private javax.swing.JButton buttonHapusPelanggan;
     private javax.swing.JButton buttonHapusProduk;
     private javax.swing.JButton buttonHapusSupplier;
     private javax.swing.JButton buttonLihatDetailPelanggan;
@@ -1154,6 +1184,7 @@ public class MainAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
