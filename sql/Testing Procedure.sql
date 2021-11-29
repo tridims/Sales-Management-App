@@ -358,3 +358,54 @@ where id_pelanggan=@id
 go
 
 -- exec update_profil_pelanggan 1, 'test', '2000-12-12', '93849283', '2B', 'batu', 'malang', 'batu', 'L', '12345'
+
+
+-- delete riwayat pesanan
+go
+create procedure delete_order @id int
+as
+delete from order_product where order_id = @id
+
+-- exec delete_order 5
+
+select status_order from order_product where order_id=1
+
+select * from order_product
+select nama_produk, sum(kuantitas) as terjual from produk
+join ordered_product on produk.product_id=ordered_product.product_id
+group by nama_produk
+select * from ordered_product
+
+
+-- tambah customer
+go
+create procedure add_customer
+    @email varchar(50), @password varchar(255),
+    @nama varchar(20), @tgl date, @nomorHp varchar(14), 
+    @nomorRumah varchar (5), @desaKec varchar(30), @kabKota varchar(30), 
+    @jalan varchar(50), @jk varchar(1), @kodePos varchar(10)
+as
+begin tran
+begin try
+    insert into customer_account 
+    values (@email, @password);
+
+    declare @id as int = (select max(id_pelanggan) from customer_account)
+
+    insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos) 
+    values (@id, @nama, @tgl, @nomorHp, @nomorRumah, @desaKec, @kabKota, @jalan, @jk, @kodePos);
+
+    if @@trancount > 0
+        begin commit tran end
+end try
+begin catch
+    if @@trancount > 0
+        begin rollback tran end
+end catch
+
+-- exec add_customer 'testingproc@gmail', '123456789', 'pak testing', '2000-12-12', '093483984', '2Z', 'Kecamatan A', 'Kota B', 'Jalan C', 'L', '12345'
+
+select * from customer_account
+join customer_profile on customer_account.id_pelanggan=customer_profile.id_pelanggan
+
+

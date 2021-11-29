@@ -193,6 +193,11 @@ public class MainAdmin extends javax.swing.JFrame {
         });
 
         buttonTambahPelanggan.setText("Tambah Pelanggan");
+        buttonTambahPelanggan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTambahPelangganActionPerformed(evt);
+            }
+        });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Daftar Pelanggan");
@@ -845,6 +850,11 @@ public class MainAdmin extends javax.swing.JFrame {
     private void buttonHapusPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusPelangganActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonHapusPelangganActionPerformed
+
+    private void buttonTambahPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahPelangganActionPerformed
+        TambahPelanggan tp = new TambahPelanggan(this);
+        tp.setVisible(true);
+    }//GEN-LAST:event_buttonTambahPelangganActionPerformed
 
     private String getIdSelectedPelangganInTable() {
         ListSelectionModel model = tableDaftarPelanggan.getSelectionModel();

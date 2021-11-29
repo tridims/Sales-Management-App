@@ -518,6 +518,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hapus Riwayat"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonHapusRiwayatActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="buttonPrintRiwayat">
               <Properties>

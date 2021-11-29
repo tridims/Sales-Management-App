@@ -72,9 +72,11 @@ public class Pelanggan extends javax.swing.JFrame {
     private void populateDaftarProdukOrder(String idOrder) {
         fillTotal(idOrder);
         
-        if (idOrder == null) return;
         DefaultTableModel tableModel = (DefaultTableModel)tableDaftarProdukOrder.getModel();
         tableModel.setRowCount(0);
+        
+        if (idOrder == null) return;
+        
         String query = String.format("exec get_list_product_from_order %s", idOrder);
 
         try {
@@ -406,6 +408,11 @@ public class Pelanggan extends javax.swing.JFrame {
         textTotal.setEditable(false);
 
         buttonHapusRiwayat.setText("Hapus Riwayat");
+        buttonHapusRiwayat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHapusRiwayatActionPerformed(evt);
+            }
+        });
 
         buttonPrintRiwayat.setText("Print Riwayat Order");
 
@@ -527,6 +534,56 @@ public class Pelanggan extends javax.swing.JFrame {
         buttonBatalEdit.setVisible(false);
     }//GEN-LAST:event_buttonBatalEditActionPerformed
 
+    private void buttonHapusRiwayatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusRiwayatActionPerformed
+        String id = getSelectedRiwayatFromTable();
+        
+        String status = getOrderStatus(id);
+        
+        if (id == null) return;
+        if (status.equals("1") || status == null) {
+            JOptionPane.showMessageDialog(null, "Tidak bisa dihapus");
+            return;
+        }
+        
+        try {
+            String query = String.format("exec delete_order %s", id);
+            parentForm.getDatabaseTools().runUpdateQuery(query);
+            refresh();
+            JOptionPane.showMessageDialog(null, "Berhasil");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal Menghapus");
+        }
+    }//GEN-LAST:event_buttonHapusRiwayatActionPerformed
+
+    private String getOrderStatus(String id) {
+        String query = String.format("select status_order from order_product where order_id=%s", id);
+        String result = null;
+        try {
+            ResultSet rs = parentForm.getDatabaseTools().runQuery(query);
+            
+            while (rs.next()) {
+                result = rs.getString("status_order");
+            }
+            return result;
+            
+        } catch (Exception e) {
+        }
+        
+        return null;
+    }
+    
+    private String getSelectedRiwayatFromTable() {
+        ListSelectionModel model = tableDaftarOrder.getSelectionModel();
+        
+        if (!model.isSelectionEmpty()) {
+            int index = model.getMinSelectionIndex();
+            String id = daftarIdOrder.get(index);
+            return id;
+        }
+        
+        return null;
+    }
+    
     private void updateDataPelanggan() {
 
         String nama = textNama.getText();
