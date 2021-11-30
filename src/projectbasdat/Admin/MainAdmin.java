@@ -15,6 +15,18 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import projectbasdat.DatabaseTools;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
+
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
+
+
 /**
  *
  * @author tridi
@@ -114,6 +126,7 @@ public class MainAdmin extends javax.swing.JFrame {
         buttonTambahPelanggan = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         buttonHapusPelanggan = new javax.swing.JButton();
+        buttonPrintDaftarPelanggan = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDaftarKaryawan = new javax.swing.JTable();
@@ -307,6 +320,13 @@ public class MainAdmin extends javax.swing.JFrame {
             }
         });
 
+        buttonPrintDaftarPelanggan.setText("Print");
+        buttonPrintDaftarPelanggan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPrintDaftarPelangganActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -318,14 +338,16 @@ public class MainAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(63, 63, 63)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(buttonTambahPelanggan)
                                 .addGap(18, 18, 18)
                                 .addComponent(buttonLihatDetailPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(buttonHapusPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(buttonHapusPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonPrintDaftarPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -338,7 +360,8 @@ public class MainAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonLihatDetailPelanggan)
                     .addComponent(buttonTambahPelanggan)
-                    .addComponent(buttonHapusPelanggan))
+                    .addComponent(buttonHapusPelanggan)
+                    .addComponent(buttonPrintDaftarPelanggan))
                 .addContainerGap())
         );
 
@@ -964,6 +987,33 @@ public class MainAdmin extends javax.swing.JFrame {
         tp.setVisible(true);
     }//GEN-LAST:event_buttonTambahPelangganActionPerformed
 
+    private void buttonPrintDaftarPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrintDaftarPelangganActionPerformed
+        try {
+            JasperReport jasperReport = getJasperReport("src/projectbasdat/Jasper/Daftar Pelanggan.jrxml");
+            
+            Map<String, Object> parameters = getParameters();
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, db.getConnection());
+            
+            JasperViewer.viewReport(jasperPrint, false);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_buttonPrintDaftarPelangganActionPerformed
+
+    private static JasperReport getJasperReport(String uri) throws FileNotFoundException, JRException {
+        File template = Paths.get(uri).toFile();
+        return JasperCompileManager.compileReport(template.getAbsolutePath());
+    }
+    
+    private static Map<String, Object> getParameters() {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("created By", "Dimas");
+        return parameters;
+    }
+    
     private String getIdSelectedPelangganInTable() {
         ListSelectionModel model = tableDaftarPelanggan.getSelectionModel();
         
@@ -1280,6 +1330,7 @@ public class MainAdmin extends javax.swing.JFrame {
     private javax.swing.JButton buttonHapusProduk;
     private javax.swing.JButton buttonHapusSupplier;
     private javax.swing.JButton buttonLihatDetailPelanggan;
+    private javax.swing.JButton buttonPrintDaftarPelanggan;
     private javax.swing.JButton buttonTambahCabang;
     private javax.swing.JButton buttonTambahDataSupply;
     private javax.swing.JButton buttonTambahKaryawan;

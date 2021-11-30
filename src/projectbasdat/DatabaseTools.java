@@ -27,6 +27,10 @@ public class DatabaseTools {
     public DatabaseTools() {
         connectToSqlServer();
     }
+    
+    public Connection getConnection() {
+        return this.connection;
+    }
 
     public String getUser() {
         return user;
