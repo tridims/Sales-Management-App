@@ -1,4 +1,3 @@
---use database dulu
 delete from supplier;
 delete from kategori;
 delete from produk;
@@ -80,7 +79,7 @@ insert into ordered_product (order_id, product_id, kuantitas, harga_product)valu
 insert into ordered_product (order_id, product_id, kuantitas, harga_product)values (4, 1, 2, 10000)
 insert into ordered_product (order_id, product_id, kuantitas, harga_product)values (3, 2, 11, 5000)
 
--- check semua tabel
+-- CHECK SEMUA TABEL
 select * from cabang
 select * from customer_account
 select * from customer_profile
@@ -93,6 +92,6 @@ select * from produk
 select * from supplied_product
 select * from supplier
 
--- check view
+-- CHECK VIEW
 select * from subtotal
 select * from total
