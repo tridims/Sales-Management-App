@@ -848,7 +848,17 @@ public class MainAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonLihatDetailPelangganActionPerformed
 
     private void buttonHapusPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHapusPelangganActionPerformed
-        // TODO add your handling code here:
+        String id = getIdSelectedPelangganInTable();
+        
+        if (id == null) return;
+        
+        try {
+            String query = String.format("exec delete_customer %s", id);
+            db.runUpdateQuery(query);
+            refresh();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Tidak bisa dihapus");
+        }
     }//GEN-LAST:event_buttonHapusPelangganActionPerformed
 
     private void buttonTambahPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTambahPelangganActionPerformed

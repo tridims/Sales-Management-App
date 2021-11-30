@@ -1,4 +1,4 @@
--- Testing procedure
+-- PROCEDURE
 
 -- mengambil data karyawan (menu admin)
 go
@@ -405,7 +405,23 @@ end catch
 
 -- exec add_customer 'testingproc@gmail', '123456789', 'pak testing', '2000-12-12', '093483984', '2Z', 'Kecamatan A', 'Kota B', 'Jalan C', 'L', '12345'
 
-select * from customer_account
-join customer_profile on customer_account.id_pelanggan=customer_profile.id_pelanggan
+-- deleting customer
+go
+create procedure delete_customer
+    @id int
+as
+begin transaction
+begin try
+    delete from customer_account
+    where id_pelanggan = @id
 
+    delete from customer_profile
+    where id_pelanggan = @id
 
+    if @@trancount > 0
+        begin commit tran end
+end try
+begin catch
+    if @@trancount > 0
+        begin rollback tran end
+end catch
