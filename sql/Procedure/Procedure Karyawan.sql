@@ -62,3 +62,24 @@ set nama = @nama, jenis_kelamin = @jenisKelamin, tanggal_lahir = @tanggalLahir,
 where id_karyawan = @id
 
 
+-- SEARCH KARYAWAN
+go
+create procedure cari_karyawan 
+    @masukan varchar(255)
+as
+declare @kataKunci varchar(102) = '%' + @masukan + '%';
+select * from 
+    (select k.id_karyawan, k.nama, k.jenis_kelamin, k.tanggal_lahir, k.nomor_hp, k.email, k.alamat, k.jabatan,
+        c.nama_cabang, j.gaji
+    from karyawan k
+    left outer join cabang c on k.id_cabang=c.id_cabang
+    left outer join jabatan j on j.nama_jabatan=k.jabatan) as data_karyawan
+where nama like @kataKunci or
+    jenis_kelamin like @kataKunci or
+    tanggal_lahir like @kataKunci or
+    nomor_hp like @kataKunci or
+    email like @kataKunci or
+    alamat like @kataKunci or 
+    jabatan like @kataKunci or
+    nama_cabang like @kataKunci or
+    gaji like @kataKunci

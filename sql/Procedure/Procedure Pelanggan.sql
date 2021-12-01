@@ -103,3 +103,23 @@ on ca.id_pelanggan=cp.id_pelanggan
 where ca.id_pelanggan = @id
 
 
+-- MENCARI PELANGGAN
+go
+create procedure cari_pelanggan
+    @masukan varchar(100)
+as
+declare @kataKunci varchar(102) = '%' + @masukan + '%';
+select * from
+    (select cp.id_pelanggan, cp.nama_pelanggan, cp.tanggal_lahir, cp.nomor_hp, cp.jenis_kelamin, ca.email,
+        cp.jalan + ' no ' + cp.nomor_rumah + ' desa/kecamatan ' + cp.desa_kecamatan + ' kabupaten/kota ' + cp.kabupaten_kota + ' kode pos ' + cp.kode_pos as alamat,
+        (select count(id_pelanggan) from order_product op where op.id_pelanggan=cp.id_pelanggan) as jumlah_order
+    from customer_profile cp
+    join customer_account ca on cp.id_pelanggan=ca.id_pelanggan) as data_pelanggan
+where nama_pelanggan like @kataKunci or
+    tanggal_lahir like @kataKunci or
+    nomor_hp like @kataKunci or
+    jenis_kelamin like @kataKunci or
+    email like @kataKunci or
+    alamat like @kataKunci
+
+-- exec cari_pelanggan 'jl'
