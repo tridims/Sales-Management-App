@@ -8,7 +8,7 @@ join produk p on p.product_id=sp.product_id
 where sp.id_supplier = @id_supplier
 
 
--- MENAMBAH SUPPLIED_PRODUCT BARU : TAMBAHDATASUPPLY : OTOMATIS MENGUPDATE JUMLAH STOK PRODUK DI BAGIAN PRODUK
+-- MENAMBAH SUPPLIED_PRODUCT BARU
 go
 create procedure add_supplied_product
     @idProduk int,

@@ -15,7 +15,6 @@ join produk p on op.product_id=p.product_id
 join subtotal s on op.order_id=s.order_id and op.product_id=s.product_id
 where op.order_id = @orderId
 
-exec get_list_product_from_order 3
 
 -- MENDAPATKAN DAFTAR ODER DARI SUATU PELANGGAN
 go
@@ -57,6 +56,8 @@ join karyawan k on op.id_karyawan=k.id_karyawan
 where op.status_order=1
 order by op.tanggal_kirim desc
 
+
+-- SET STATUS ORDER
 go
 create procedure set_status_order
     @id int,
