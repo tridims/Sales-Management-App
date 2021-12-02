@@ -18,8 +18,8 @@ insert into supplier (nama_supplier, alamat, nomor_hp, email, kode_pos) values (
 insert into supplier (nama_supplier, alamat, nomor_hp, email, kode_pos) values ('Hassan', 'Jalan Belum Merdeka', '036744125', 'hassan@gmail.com', '9005');
 
 -- TABEL KATEGORI
-insert into kategori values ('Buah', 'kategori yang berisi buah-buahan');
-insert into kategori values ('Sayur', 'kategori yang berisi sayur-sayuran');
+insert into kategori values ('buah', 'kategori yang berisi buah-buahan');
+insert into kategori values ('sayur', 'kategori yang berisi sayur-sayuran');
 
 -- TABEL PRODUK
 insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori) values ('Mangga', 40, 15000, 'mangga segar dan sehat', 'vitamin a', 'buah');

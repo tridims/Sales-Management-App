@@ -31,7 +31,6 @@ from temp t join karyawan k
 on t.id_karyawan=k.id_karyawan
 join cabang c on k.id_cabang=c.id_cabang
 
--- exec karyawan_teraktif_sebulan_terakhir
 
 -- ##################################################################################################
 -- c. Apa 3 barang yang paling banyak dibeli berbarengan dengan pembelian ‘sesuatu’? (atau
@@ -64,8 +63,6 @@ from
 join produk p on p.product_id=res.product_id
 
 
-exec tigaTertinggiCampur 2
-
-
+exec tigaTertinggiCampur 1
 
 -- ##################################################################################################

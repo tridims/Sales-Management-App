@@ -5,12 +5,23 @@ as
 select product_id, nama_produk, jumlah_stok, harga_satuan, kategori from produk
 go
 
+-- MELAKUKAN PENCARIAN PRODUK
+go
+create procedure cari_produk
+    @masukan varchar(253)
+as
+declare @pola varchar(255) = '%' + @masukan + '%';
+select product_id, nama_produk, jumlah_stok, harga_satuan, kategori 
+from produk
+where nama_produk like @pola or jumlah_stok like @pola or
+    harga_satuan like @pola or kategori like @pola
 
 -- DATA SPESIFIK PRODUK
 go
 create procedure get_detail_produk @idProduk int
 as
-select nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori from produk
+select nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori 
+from produk
 where produk.product_id = @idProduk
 go
 

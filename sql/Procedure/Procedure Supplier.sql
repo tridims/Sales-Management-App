@@ -53,3 +53,19 @@ create procedure delete_supplier @id int
 as
 delete from supplier where id_supplier = @id
 
+
+-- MENCARI SUPPLIER
+go
+create procedure cari_supplier
+    @masukan varchar(253)
+as
+declare @keyword varchar(255) = '%' + @masukan + '%'
+select * from
+    (select s.id_supplier, s.nama_supplier, s.alamat, s.nomor_hp, s.email, 
+        (select count(*) from supplied_product sp where sp.id_supplier=s.id_supplier) as jumlah_produk
+    from supplier s) as ds
+where nama_supplier like @keyword or
+    alamat like @keyword or
+    nomor_hp like @keyword or
+    email like @keyword or
+    jumlah_produk like @keyword

@@ -50,28 +50,31 @@ order by cp.nama_pelanggan]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="45" splitType="Stretch">
+		<band height="58" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-20" y="-20" width="595" height="78" forecolor="#B1E693" backcolor="#B1E693" uuid="b243f0f0-559a-4a36-83d7-fe5a52e33bc2"/>
+			</rectangle>
 			<staticText>
 				<reportElement x="0" y="0" width="560" height="40" uuid="a3c674a2-e031-48bc-b72d-1533e72cdc6a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="18" isBold="true"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Inter" size="24" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Daftar Pelanggan]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="12" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="27" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="110" height="20" uuid="ef31c569-09e8-4bdf-8b58-13a5000bc412">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1fbc7220-a1d7-400b-b619-0b1f08ab6617"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nama]]></text>
 			</staticText>
@@ -81,7 +84,7 @@ order by cp.nama_pelanggan]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JK]]></text>
 			</staticText>
@@ -91,7 +94,7 @@ order by cp.nama_pelanggan]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Alamat Email]]></text>
 			</staticText>
@@ -101,7 +104,7 @@ order by cp.nama_pelanggan]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nomor HP]]></text>
 			</staticText>
@@ -111,7 +114,7 @@ order by cp.nama_pelanggan]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Kode Pos]]></text>
 			</staticText>
@@ -121,12 +124,15 @@ order by cp.nama_pelanggan]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tanggal Lahir]]></text>
 			</staticText>
 			<line>
 				<reportElement x="0" y="20" width="560" height="1" uuid="7f887b10-55c4-4e36-8510-0e3a4c36a065"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
 			</line>
 		</band>
 	</columnHeader>
@@ -174,6 +180,9 @@ order by cp.nama_pelanggan]]>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{tanggal_lahir}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="13" width="560" height="1" uuid="dc3a4e34-6b62-4e84-8465-dd1cbc3e5344"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>

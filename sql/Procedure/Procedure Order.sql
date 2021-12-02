@@ -15,6 +15,8 @@ join produk p on op.product_id=p.product_id
 join subtotal s on op.order_id=s.order_id and op.product_id=s.product_id
 where op.order_id = @orderId
 
+exec get_list_product_from_order 3
+
 -- MENDAPATKAN DAFTAR ODER DARI SUATU PELANGGAN
 go
 create procedure get_order_pelanggan @idPelanggan int
@@ -23,3 +25,43 @@ select order_id, status_order, tanggal_kirim, (select nama from karyawan k where
 from order_product op
 where op.id_pelanggan=@idPelanggan
 order by tanggal_kirim asc
+
+
+-- MENDAPATKAN DATA ORDER MASUK (Semua, selesai, belum selesai)
+go
+create procedure get_data_order_masuk
+as
+select op.order_id, cp.nama_pelanggan, op.tanggal_kirim, op.status_order, k.nama
+from order_product op
+join customer_profile cp on op.id_pelanggan=cp.id_pelanggan
+join karyawan k on op.id_karyawan=k.id_karyawan
+order by op.tanggal_kirim desc
+
+go
+create procedure get_data_order_masuk_belum_selesai
+as
+select op.order_id, cp.nama_pelanggan, op.tanggal_kirim, op.status_order, k.nama
+from order_product op
+join customer_profile cp on op.id_pelanggan=cp.id_pelanggan
+join karyawan k on op.id_karyawan=k.id_karyawan
+where op.status_order=0
+order by op.tanggal_kirim desc
+
+go 
+create procedure get_data_order_masuk_selesai
+as
+select op.order_id, cp.nama_pelanggan, op.tanggal_kirim, op.status_order, k.nama
+from order_product op
+join customer_profile cp on op.id_pelanggan=cp.id_pelanggan
+join karyawan k on op.id_karyawan=k.id_karyawan
+where op.status_order=1
+order by op.tanggal_kirim desc
+
+go
+create procedure set_status_order
+    @id int,
+    @status bit
+as
+update order_product
+set status_order=@status
+where order_id=@id

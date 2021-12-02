@@ -18,3 +18,7 @@ insert into test2 values (5000)
 
 select * from test2
 where gaji like '%10%'
+
+
+select * from kategori
+select product_id, nama_produk from produk
