@@ -1339,9 +1339,9 @@ public class MainAdmin extends javax.swing.JFrame {
 
     private void buttonPrintDaftarPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrintDaftarPelangganActionPerformed
         try {
-            JasperReport jasperReport = getJasperReport("src/projectbasdat/Jasper/Daftar Pelanggan.jrxml");
+            JasperReport jasperReport = getJasperReport("resource/Daftar Pelanggan.jrxml");
             
-            Map<String, Object> parameters = getParameters();
+            Map<String, Object> parameters = new HashMap<>();
             
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, db.getConnection());
             
@@ -1481,12 +1481,6 @@ public class MainAdmin extends javax.swing.JFrame {
     private static JasperReport getJasperReport(String uri) throws FileNotFoundException, JRException {
         File template = Paths.get(uri).toFile();
         return JasperCompileManager.compileReport(template.getAbsolutePath());
-    }
-    
-    private static Map<String, Object> getParameters() {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("created By", "Dimas");
-        return parameters;
     }
     
     private String getIdSelectedPelangganInTable() {

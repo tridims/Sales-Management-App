@@ -33,10 +33,8 @@ import projectbasdat.DatabaseTools;
  */
 public class MainCustomer extends javax.swing.JFrame {
     DatabaseTools db = new DatabaseTools();
-    int idPel;
-    String nama;
-    String email,password;
-    int id_pelanggan;
+    int idPel, id_pelanggan;
+    String nama, email,password;
     ArrayList<String> daftarIdProduk,daftarOrderId,daftarOrderIdAktif;
     /**
      * Creates new form Main

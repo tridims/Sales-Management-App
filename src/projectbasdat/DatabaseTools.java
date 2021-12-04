@@ -65,6 +65,20 @@ public class DatabaseTools {
         }
     }
     
+    public void beginTransaction() throws SQLException {
+        this.connection.setAutoCommit(false);
+    }
+    
+    public void commitTransaction() throws SQLException {
+        this.connection.commit();
+        this.connection.setAutoCommit(true);
+    }
+    
+    public void rollbackTransaction() throws SQLException {
+        this.connection.rollback();
+        this.connection.setAutoCommit(true);
+    }
+    
     public void close() {
         try {
             connection.close();
