@@ -26,3 +26,5 @@ select product_id, nama_produk from produk
 select * from order_product
 select * from ordered_product
 select * from produk where product_id = 40
+
+select * from order_product where id_pelanggan = 3

@@ -110,7 +110,10 @@ as
 delete from order_product where order_id=@order_id
 
 -- UPDATE STOK PRODUK -> VAREL
-create procedure update_stok_produk @product_id int, @jumlah int as
+go
+create procedure update_stok_produk 
+	@product_id int, @jumlah int 
+as
 update produk set jumlah_stok=(jumlah_stok-@jumlah) where product_id=@product_id
 go
 

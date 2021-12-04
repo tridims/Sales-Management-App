@@ -9,11 +9,18 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -415,6 +422,11 @@ public class Pelanggan extends javax.swing.JFrame {
         });
 
         buttonPrintRiwayat.setText("Print Riwayat Order");
+        buttonPrintRiwayat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPrintRiwayatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -554,6 +566,36 @@ public class Pelanggan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Gagal Menghapus");
         }
     }//GEN-LAST:event_buttonHapusRiwayatActionPerformed
+
+    private String getIdSelectedOrder() {
+        ListSelectionModel model = tableDaftarOrder.getSelectionModel();
+        if (!model.isSelectionEmpty()) {
+            int index = model.getMinSelectionIndex();
+            String id = daftarIdOrder.get(index);
+            return id;
+        }
+        return null;
+    }
+    
+    private void buttonPrintRiwayatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrintRiwayatActionPerformed
+        String id = getIdSelectedOrder();
+        if (id == null) return;
+        
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport("resource/notaCustomer.jrxml");
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("order_id", Integer.parseInt(id));
+            
+            JasperPrint jasperPrint = 
+                    JasperFillManager.fillReport(jasperReport, parameters, parentForm.getDatabaseTools().getConnection());
+            
+            JasperViewer.viewReport(jasperPrint, false);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_buttonPrintRiwayatActionPerformed
 
     private String getOrderStatus(String id) {
         String query = String.format("select status_order from order_product where order_id=%s", id);

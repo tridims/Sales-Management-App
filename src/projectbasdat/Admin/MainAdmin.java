@@ -35,7 +35,7 @@ public class MainAdmin extends javax.swing.JFrame {
 
     DatabaseTools db = new DatabaseTools();
     ArrayList<String> daftarIdPelanggan, daftarIdKaryawan, daftarIdSupplier, 
-            daftarIdCabang, daftarIdProduk, daftarIdSuppliedProduct;
+            daftarIdCabang, daftarIdProduk, daftarIdSuppliedProduct, daftarIdDaftarOrderMasuk;
     
     /**
      * Creates new form Main
@@ -378,7 +378,7 @@ public class MainAdmin extends javax.swing.JFrame {
                         .addComponent(cbBarangPalingBanyakDibeli, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(buttonCariBarangPalingBanyakDibeliDenganSesuatu)))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,8 +388,8 @@ public class MainAdmin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -397,7 +397,7 @@ public class MainAdmin extends javax.swing.JFrame {
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -405,7 +405,7 @@ public class MainAdmin extends javax.swing.JFrame {
                     .addComponent(buttonCariBarangPalingBanyakDibeliDenganSesuatu))
                 .addGap(13, 13, 13)
                 .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
+                .addGap(58, 58, 58))
         );
 
         jScrollPane14.setViewportView(jPanel7);
@@ -1132,6 +1132,11 @@ public class MainAdmin extends javax.swing.JFrame {
         });
 
         buttonPrintRiwayat.setText("Print Order");
+        buttonPrintRiwayat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPrintRiwayatActionPerformed(evt);
+            }
+        });
 
         jLabel19.setText("Tampilkan Order");
 
@@ -1478,6 +1483,25 @@ public class MainAdmin extends javax.swing.JFrame {
         populateTableDaftarProduk(query);
     }//GEN-LAST:event_buttonCariProdukActionPerformed
 
+    private void buttonPrintRiwayatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPrintRiwayatActionPerformed
+        String id = getIdSelectedOrderMasuk();
+        if (id == null) return;
+        
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport("resource/notaCustomer.jrxml");
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("order_id", Integer.parseInt(id));
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, db.getConnection());
+            
+            JasperViewer.viewReport(jasperPrint, false);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_buttonPrintRiwayatActionPerformed
+
     private static JasperReport getJasperReport(String uri) throws FileNotFoundException, JRException {
         File template = Paths.get(uri).toFile();
         return JasperCompileManager.compileReport(template.getAbsolutePath());
@@ -1556,6 +1580,9 @@ public class MainAdmin extends javax.swing.JFrame {
         
         populateDetailOrderMasuk(null);
         fillTotal(null);
+        
+        populateTableProdukPenjualanTertinggiKategori();
+        populateTableSupplierPalingBanyakSupplyProduk();
     }
     
     /**
@@ -1840,13 +1867,43 @@ public class MainAdmin extends javax.swing.JFrame {
     }
     
     private void populateTableProdukPenjualanTertinggiKategori() {
-        // Tabel Pertama di Bagian informasi
-        // TODO
+        try {
+            String query = "exec get_penjualan_tertinggi";
+            ResultSet rs = db.runQuery(query);
+            
+            DefaultTableModel tableModel = (DefaultTableModel) tableProdukPenjualanTertinggi.getModel();
+            tableModel.setRowCount(0);
+            
+            while (rs.next()) {
+                tableModel.addRow(new Object[] {
+                    rs.getString("kategori"),
+                    rs.getString("nama_produk"),
+                    rs.getString("jumlah_terjual")
+                });
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error mendapatkan data table produk penjualan tertinggi");
+        }
     }
     
     private void populateTableSupplierPalingBanyakSupplyProduk() {
-        // Tabel kedua di bagian informasi
-        // TODO
+        try {
+            String query = "exec supplier_teraktif";
+            ResultSet rs = db.runQuery(query);
+            
+            DefaultTableModel tableModel = (DefaultTableModel) tableSupplierPalingMensupply.getModel();
+            tableModel.setRowCount(0);
+            
+            while (rs.next()) {
+                tableModel.addRow(new Object[] {
+                    rs.getString("nama_supplier"),
+                    rs.getString("jumlah_produk")
+                });
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error mendapatkan data daftar supplier rajin");
+        }
     }
     
     private ArrayList<String> daftarIdCBPilihanBarang;
@@ -1869,7 +1926,6 @@ public class MainAdmin extends javax.swing.JFrame {
     }
     
     private void populateTableDaftarProdukPalingDibeliDengan(String id) {
-        // tabel yang menampilkan produk yang paling banyak dibeli dengan suatu barang
         String query = String.format("exec tigaTertinggiCampur %s", id);
         
         try {
@@ -1889,7 +1945,6 @@ public class MainAdmin extends javax.swing.JFrame {
         }
     }
     
-    ArrayList<String> daftarIdDaftarOrderMasuk;
     private void populateTableDaftarOrderMasuk() {
         int pilihan = cbFilterStatusOrderMasuk.getSelectedIndex();
         daftarIdDaftarOrderMasuk = new ArrayList();

@@ -8,5 +8,20 @@ return dateadd(day, 7, (select cast (GETDATE() as date)))
 end
 go
 
-select dbo.get_tanggal_kirim ()
+-- MENDAPATKAN ID DARI KARYAWAN DENGAN JUMLAH ORDER PALING SEDIKIT
+-- SEBAGAI KARYAWAN YANG MENGURUS ORDERAN BERIKUTNYA -> DIMAS
+go
+create function get_karyawan()
+    returns int
+as
+begin return(
+    select id_karyawan from 
+        (select top 1 k.id_karyawan, count(order_id) as jumlah_order
+        from order_product op
+        join karyawan k on k.id_karyawan=op.id_karyawan
+        group by k.id_karyawan
+        order by jumlah_order asc
+        ) r
+)
+end
 

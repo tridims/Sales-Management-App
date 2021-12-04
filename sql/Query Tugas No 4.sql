@@ -2,10 +2,22 @@
 -- PERTANYAAN SEJENIS, BISA YANG BUKAN MAKANAN PRODUK DARI SISTEM YANG DIBUAT)
 
 -- 5 PRODUK PENJUALAN TERTINGGI DARI SETIAP KATEGORI
-
+create procedure get_penjualan_tertinggi
+as
+select kategori, nama_produk, kuantitas as jumlah_terjual
+from(
+	select p.product_id, p.nama_produk, kategori, op.kuantitas, ROW_NUMBER () 
+		over(partition by kategori
+			Order by op.kuantitas desc) ranks
+		from produk p
+		join (select product_id, sum(kuantitas) kuantitas from ordered_product
+			group by product_id) op
+		on p.product_id = op.product_id
+		right join kategori k on kategori=nama_kategori) t
+	where ranks <= 5
 
 -- ##################################################################################################
-
+-- SOAL
 -- B. APA 5 TOKO YANG MEMILIKI PENJUALAN TERTINGGI DALAM KURUN WAKTU TERAKHIR? (ATAU PERTANYAAN
 -- SEJENIS, BISA YANG BUKAN TOKO TERGANTUNG DARI SISTEM YANG DIBUAT)
 
@@ -24,6 +36,8 @@ as
 select nama_supplier, jumlah_produk
 from temp t join supplier s
 on t.id_supplier = s.id_supplier
+
+exec supplier_teraktif
 
 -- ##################################################################################################
 -- 5 KARYAWAN YANG PALING BANYAK MENANGANI ORDER DALAM KURUN WAKTU TERAKHIR

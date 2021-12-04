@@ -47,15 +47,10 @@ public class customerPesan extends javax.swing.JFrame {
         
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                
-                // batal pesanannya
-                try {
-                    buttonBatalPesanMouseClicked(null);
-                    db.close();
-                } catch (Exception ex) {
-                }
+                db.close();
             }
         });
+        
         ListSelectionModel modelTabelProduk = tabelProduk.getSelectionModel();
         modelTabelProduk.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -78,6 +73,7 @@ public class customerPesan extends javax.swing.JFrame {
         });
         
     }
+    
     private void populateTextTotal(int order_id){
         String queryView=String.format("select * from total where order_id=%s",order_id);
         try {

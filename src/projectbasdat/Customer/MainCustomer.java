@@ -709,10 +709,17 @@ public class MainCustomer extends javax.swing.JFrame {
     private void buttonPesanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPesanMouseClicked
         String query=String.format("select dbo.get_tanggal_kirim() as tanggal_kirim");
         try {
-            ResultSet rs=db.runQuery(query);
+            // get tanggal kirim (1 minggu kemudian)
+            ResultSet rs = db.runQuery(query);
             rs.next();
-            String date="'"+rs.getString("tanggal_kirim")+"'";
-            String query2=String.format("exec new_order_product %s, %s, %s, %s",date, 0, idPel, null);
+            String date = "'" + rs.getString("tanggal_kirim") + "'";
+            
+            // get id karyawan yang memiliki orderan paling sedikit
+            rs = db.runQuery("select dbo.get_karyawan() as id_karyawan");
+            rs.next();
+            String idKaryawan = rs.getString("id_karyawan");
+            
+            String query2=String.format("exec new_order_product %s, %s, %s, %s", date, 0, idPel, idKaryawan);
             db.runUpdateQuery(query2);
             String query3=String.format("select max(order_id) as order_id from order_product");
             ResultSet rs3=db.runQuery(query3);
@@ -796,7 +803,7 @@ public class MainCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_printRiwayatOrderButtonActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport("resource/notaCustomer.jrxml");
             String selectedOrderId = daftarOrderIdAktif.get(TableOrderAktif.getSelectedRow());
