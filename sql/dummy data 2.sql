@@ -83,16 +83,16 @@ insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition
 insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori) values ('Blackcurrant', 100, 6500, 'snack yang berasal dari blackcurrant', 'kalori 190', 'snack buah');
 
 --TABEL SUPPLIED_PRODUCT
-insert into supplied_product values (1, 1, 50, '2020-12-31');
-insert into supplied_product values (2, 2, 25, '2020-12-31');
-insert into supplied_product values (3, 3, 45, '2020-12-31');
-insert into supplied_product values (4, 4, 10, '2020-12-31');
-insert into supplied_product values (5, 6, 23, '2020-12-31');
-insert into supplied_product values (1, 1, 20, '2021-01-02');
-insert into supplied_product values (2, 2, 43, '2021-01-18');
-insert into supplied_product values (6, 6, 15, '2021-01-19');
-insert into supplied_product values (1, 1, 76, '2021-01-20');
-insert into supplied_product values (7, 7, 26, '2021-01-20');
+insert into supplied_product values (1, 1, 50, '2021-11-21');
+insert into supplied_product values (2, 2, 25, '2021-11-25');
+insert into supplied_product values (3, 3, 45, '2021-11-26');
+insert into supplied_product values (4, 4, 10, '2021-11-29');
+insert into supplied_product values (5, 6, 23, '2021-11-28');
+insert into supplied_product values (1, 1, 20, '2021-11-22');
+insert into supplied_product values (2, 2, 43, '2021-12-01');
+insert into supplied_product values (6, 6, 15, '2021-12-01');
+insert into supplied_product values (1, 1, 76, '2021-12-01');
+insert into supplied_product values (7, 7, 26, '2021-12-01');
 
 --TABEL JABATAN
 insert into jabatan values ('Manager', 6000000);

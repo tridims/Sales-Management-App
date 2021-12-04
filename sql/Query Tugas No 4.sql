@@ -1,7 +1,7 @@
 -- A. APA SAJA 5 PRODUK DENGAN PENJUALAN TERTINGGI DARI TIAP TOKO/PEMBELI (MERCHANT)? (ATAU
 -- PERTANYAAN SEJENIS, BISA YANG BUKAN MAKANAN PRODUK DARI SISTEM YANG DIBUAT)
 
--- 5 PRODUK PENJUALAN TERTINGGI DARI SETIAP KATEGORI -> ACHMAN ICHDAFAZA
+-- 5 PRODUK PENJUALAN TERTINGGI DARI SETIAP KATEGORI -> ACHMAD ICHDAFAZA R
 create procedure get_penjualan_tertinggi
 as
 select kategori, nama_produk, kuantitas as jumlah_terjual
@@ -13,11 +13,10 @@ from(
 		join (select product_id, sum(kuantitas) kuantitas from ordered_product
 			group by product_id) op
 		on p.product_id = op.product_id
-		right join kategori k on kategori=nama_kategori) t
+		join kategori k on kategori=nama_kategori) t
 	where ranks <= 5
 
 -- ##################################################################################################
--- SOAL
 -- B. APA 5 TOKO YANG MEMILIKI PENJUALAN TERTINGGI DALAM KURUN WAKTU TERAKHIR? (ATAU PERTANYAAN
 -- SEJENIS, BISA YANG BUKAN TOKO TERGANTUNG DARI SISTEM YANG DIBUAT)
 

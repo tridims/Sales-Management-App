@@ -24,6 +24,6 @@ on ordered_product
 after delete
 as
     update produk
-    set jumlah_stok = (select iif((jumlah_stok - jumlah_produk)>0, jumlah_stok - jumlah_produk, 0) 
+    set jumlah_stok = (select iif((jumlah_stok - kuantitas)>0, jumlah_stok - kuantitas, 0) 
     from deleted 
     where produk.product_id = deleted.product_id)

@@ -17,3 +17,8 @@ left outer join
 order_product as op 
 on st.order_id=op.order_id
 go
+
+-- VIEW UMUR
+create view umur as
+select id_pelanggan, datediff(year, tanggal_lahir, getdate()) as umur
+from customer_profile
