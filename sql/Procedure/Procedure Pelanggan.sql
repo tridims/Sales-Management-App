@@ -58,7 +58,7 @@ from customer_profile cp
 join customer_account ca on cp.id_pelanggan=ca.id_pelanggan
 
 
--- MENGAMBIL PROFIL PELANGGAN
+-- MENGAMBIL PROFIL PELANGGAN -> Varel Y.S
 go
 create procedure get_profil_pelanggan 
     @email varchar(100), @password varchar(40) 
@@ -67,7 +67,7 @@ select * from customer_account ca join customer_profile cp on ca.id_pelanggan = 
 where email=@email and password=@password
 
 
--- MENGUPDATE AKUN PELANGGAN
+-- MENGUPDATE AKUN PELANGGAN -> Varel Y.S
 go
 create procedure update_akun_pelanggan 
     @id int, @email varchar(100), @password varchar(40) 
@@ -76,8 +76,7 @@ update customer_account set email=@email, password=@password
 where id_pelanggan=@id
 
 
-
--- UPDATE PROFIL PELANGGAN
+-- UPDATE PROFIL PELANGGAN -> Varel Y.S
 go
 create procedure update_profil_pelanggan 
     @id int, @nama varchar(20), @tgl date, @nomorHp varchar(14), 
@@ -91,7 +90,7 @@ set nama_pelanggan=@nama, tanggal_lahir=@tgl,
 where id_pelanggan=@id
 
 
--- MENDAPATKAN DATA PELANGGAN SPESIFIK
+-- MENDAPATKAN DATA PELANGGAN SPESIFIK -> Varel
 go
 create procedure get_specific_pelanggan @id int
 as
@@ -103,7 +102,7 @@ on ca.id_pelanggan=cp.id_pelanggan
 where ca.id_pelanggan = @id
 
 
--- MENCARI PELANGGAN
+-- MENCARI PELANGGAN -> Varel
 go
 create procedure cari_pelanggan
     @masukan varchar(100)
@@ -122,4 +121,57 @@ where nama_pelanggan like @kataKunci or
     email like @kataKunci or
     alamat like @kataKunci
 
--- exec cari_pelanggan 'jl'
+
+-- EDIT PROFIL + AKUN PELANGGAN -> Varel
+go
+create procedure edit_profile_customer
+    @id int, @email varchar(100), @password varchar(40),
+    @nama varchar(20), @tgl date, @nomorHp varchar(14), 
+    @nomorRumah varchar (5), @desaKec varchar(30), 
+    @kabKota varchar(30), @jalan varchar(50), 
+    @jk varchar(1), @kodePos varchar(10) as
+begin transaction epc
+begin try
+	update customer_account set email=@email, password=@password
+	where id_pelanggan=@id
+	update customer_profile set nama_pelanggan=@nama, tanggal_lahir=@tgl,
+	nomor_hp=@nomorHp, nomor_rumah=@nomorRumah ,desa_kecamatan=@desaKec,
+	kabupaten_kota=@kabKota, jalan=@jalan, jenis_kelamin=@jk, kode_pos=@kodePos
+	where id_pelanggan=@id
+	if @@TRANCOUNT>0
+		begin commit transaction trans
+	end
+end try
+begin catch
+	print 'Error Occurred: Rollback All'
+	if @@TRANCOUNT >0
+		begin rollback transaction trans
+	end
+end catch
+go
+
+--TAMBAH AKUN PELANGGAN -> Gaffy
+go
+create procedure add_customer_account
+	@email varchar(50),
+	@password varchar(255)
+as
+insert into customer_account (email, password)
+values (@email, @password);
+
+-- TAMBAH PROFIL PELANGGAN -> Gaffy
+go
+create proc add_customer_profile
+	@id_pelanggan int,
+	@nama_pelanggan varchar(255),
+	@tanggal_lahir date,
+	@nomor_hp varchar(25),
+	@nomor_rumah varchar(5),
+	@desa_kecamatan varchar(50),
+	@kabupaten_kota varchar(50),
+	@jalan varchar(50),
+	@jenis_kelamin char(1),
+	@kode_pos varchar(5)
+as
+insert into customer_profile (id_pelanggan, nama_pelanggan, tanggal_lahir, nomor_hp, nomor_rumah, desa_kecamatan, kabupaten_kota, jalan, jenis_kelamin, kode_pos)
+values (@id_pelanggan, @nama_pelanggan,@tanggal_lahir ,@nomor_hp ,@nomor_rumah , @desa_kecamatan,@kabupaten_kota , @jalan,@jenis_kelamin ,@kode_pos);

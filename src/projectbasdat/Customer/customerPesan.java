@@ -29,7 +29,9 @@ public class customerPesan extends javax.swing.JFrame {
     DatabaseTools db = new DatabaseTools();
     int order_id;
     int orderby;
+    
     public customerPesan(int order_id, String nama) {
+        this.db = db;
         initComponents();
         populateTabelProduk();
         populateComboboxKategori();
@@ -42,9 +44,16 @@ public class customerPesan extends javax.swing.JFrame {
         checkBoxMax.setSelected(true);
         rbuttonTinggi.setSelected(true);
         tabelProduk.changeSelection(0, 0, false, false);
+        
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                db.close();
+                
+                // batal pesanannya
+                try {
+                    buttonBatalPesanMouseClicked(null);
+                    db.close();
+                } catch (Exception ex) {
+                }
             }
         });
         ListSelectionModel modelTabelProduk = tabelProduk.getSelectionModel();
@@ -231,6 +240,7 @@ public class customerPesan extends javax.swing.JFrame {
         checkBoxMax = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Buat Pesanan");
 
         jLabel1.setText("Nama Anda");
 
@@ -293,6 +303,11 @@ public class customerPesan extends javax.swing.JFrame {
         buttonBatalPesan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buttonBatalPesanMouseClicked(evt);
+            }
+        });
+        buttonBatalPesan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBatalPesanActionPerformed(evt);
             }
         });
 
@@ -370,7 +385,7 @@ public class customerPesan extends javax.swing.JFrame {
             }
         });
 
-        checkBoxKategori.setText("checkBoxKategori");
+        checkBoxKategori.setText("Kategori");
         checkBoxKategori.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 checkBoxKategoriItemStateChanged(evt);
@@ -549,6 +564,7 @@ public class customerPesan extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKeluarActionPerformed
@@ -591,7 +607,7 @@ public class customerPesan extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonPesanMouseClicked
 
     private void buttonBatalPesanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonBatalPesanMouseClicked
-        String query=String.format("exec trans %s",order_id);
+        String query=String.format("exec delete_order_product %s", order_id);
         try {
             db.runUpdateQuery(query);
             JOptionPane.showMessageDialog(null, "Berhasil membatalkan pemesanan");
@@ -718,10 +734,10 @@ public class customerPesan extends javax.swing.JFrame {
                 query+= String.format(" and kategori = %s",("'"+comboboxKategori.getSelectedItem()+"'"));
             }
 //            if(checkBoxMin.equals(true)){
-            if(checkBoxMin.isSelected()){
+            if(checkBoxMin.isSelected()  && !textMinHarga.getText().equals("")){
                 query+= String.format(" and harga_satuan >= %s",textMinHarga.getText());
             }
-            if(checkBoxMax.isSelected()){
+            if(checkBoxMax.isSelected() && !textMaxHarga.getText().equals("")){
                 query+= String.format(" and harga_satuan <= %s",textMaxHarga.getText());
             }
             if(checkBoxOrder.isSelected()){
@@ -757,6 +773,10 @@ public class customerPesan extends javax.swing.JFrame {
             textMaxHarga.setEnabled(false);
         }
     }//GEN-LAST:event_checkBoxMaxItemStateChanged
+
+    private void buttonBatalPesanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBatalPesanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonBatalPesanActionPerformed
 
     /**
      * @param args the command line arguments

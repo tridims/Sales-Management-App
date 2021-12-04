@@ -52,7 +52,8 @@ public class Login extends javax.swing.JFrame {
         textLogin = new javax.swing.JButton();
         openRegisterButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Login");
 
         jLabel1.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -130,6 +131,7 @@ public class Login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void textLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLoginActionPerformed
@@ -155,7 +157,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Username & Password Salah");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Username & Password Salah");
         }
     }//GEN-LAST:event_textLoginActionPerformed

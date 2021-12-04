@@ -102,14 +102,15 @@ public class MainCustomer extends javax.swing.JFrame {
         populateTableOrder();
         pupulateTableOrderAktif();
     }
-    private void refresh2(){
-        populateTableOrder();
-        pupulateTableOrderAktif();
-        DefaultTableModel tableModel = (DefaultTableModel)TableDetailPesanan.getModel();
-        tableModel.setRowCount(0);
-        DefaultTableModel tableModelPA = (DefaultTableModel)TableDetailPesananAktif.getModel();
-        tableModelPA.setRowCount(0);
-    }
+    
+//    private void refresh2(){
+//        populateTableOrder();
+//        pupulateTableOrderAktif();
+//        DefaultTableModel tableModel = (DefaultTableModel)TableDetailPesanan.getModel();
+//        tableModel.setRowCount(0);
+//        DefaultTableModel tableModelPA = (DefaultTableModel)TableDetailPesananAktif.getModel();
+//        tableModelPA.setRowCount(0);
+//    }
     
     private void populateTableOrder(){
         try {
@@ -327,7 +328,6 @@ public class MainCustomer extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         printRiwayatOrderButton = new javax.swing.JButton();
         printRiwayatProduk = new javax.swing.JButton();
-        refreshButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TableOrderAktif = new javax.swing.JTable();
@@ -342,6 +342,7 @@ public class MainCustomer extends javax.swing.JFrame {
         buttonKeluar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Aplikasi Customer");
 
         jLabel1.setText("Nama Anda");
 
@@ -506,22 +507,13 @@ public class MainCustomer extends javax.swing.JFrame {
             }
         });
 
-        refreshButton2.setText("Refresh");
-        refreshButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(printRiwayatProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(211, 211, 211)
-                .addComponent(refreshButton2)
-                .addGap(0, 662, Short.MAX_VALUE))
+                .addComponent(printRiwayatProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 590, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(3, 3, 3)
@@ -541,10 +533,8 @@ public class MainCustomer extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(527, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(printRiwayatProduk)
-                    .addComponent(refreshButton2))
+                .addContainerGap(522, Short.MAX_VALUE)
+                .addComponent(printRiwayatProduk)
                 .addGap(63, 63, 63))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -705,6 +695,7 @@ public class MainCustomer extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKeluarActionPerformed
@@ -727,7 +718,10 @@ public class MainCustomer extends javax.swing.JFrame {
             ResultSet rs3=db.runQuery(query3);
             rs3.next();
             int order_id=rs3.getInt("order_id");
-            customerPesan.main(null, order_id, nama);
+            
+//            customerPesan.main(null, order_id, nama);
+            customerPesan cp = new customerPesan(order_id, nama);
+            cp.setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(MainCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -752,7 +746,7 @@ public class MainCustomer extends javax.swing.JFrame {
                 String deleteOrderedProductQuery = String.format("exec delete_ordered_product %s, %s", selectedOrderId, productId);
                 db.runUpdateQuery(deleteOrderedProductQuery);
             }
-            String deleteOrder = String.format("exec trans %s", selectedOrderId);
+            String deleteOrder = String.format("exec delete_order_product %s", selectedOrderId);
             db.runUpdateQuery(deleteOrder);
             db.commitTransaction();
         } catch (Exception ex){ 
@@ -765,10 +759,6 @@ public class MainCustomer extends javax.swing.JFrame {
         }
         pupulateTableOrderAktif();
     }//GEN-LAST:event_BatalPesananButtonMouseClicked
-
-    private void BatalPesananButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatalPesananButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BatalPesananButtonActionPerformed
 
     private void printRiwayatProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printRiwayatProdukActionPerformed
         try {
@@ -783,12 +773,12 @@ public class MainCustomer extends javax.swing.JFrame {
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error");
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }//GEN-LAST:event_printRiwayatProdukActionPerformed
 
     private void printRiwayatOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printRiwayatOrderButtonActionPerformed
-        // TODO add your handling code here:
+
         try {
             JasperReport jasperReport = JasperCompileManager.compileReport("resource/notaCustomer.jrxml");
             String selectedOrderId = daftarOrderId.get(tableOrder.getSelectedRow());
@@ -800,8 +790,8 @@ public class MainCustomer extends javax.swing.JFrame {
             JasperViewer.viewReport(jasperPrint, false);
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error");
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error, Pilih ordernya dulu!");
+//            e.printStackTrace();
         }
     }//GEN-LAST:event_printRiwayatOrderButtonActionPerformed
 
@@ -824,12 +814,12 @@ public class MainCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        refresh2();
+        refresh();
     }//GEN-LAST:event_refreshButtonActionPerformed
 
-    private void refreshButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButton2ActionPerformed
-        refresh2();
-    }//GEN-LAST:event_refreshButton2ActionPerformed
+    private void BatalPesananButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatalPesananButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BatalPesananButtonActionPerformed
 
     
     /**
@@ -904,7 +894,6 @@ public class MainCustomer extends javax.swing.JFrame {
     private javax.swing.JButton printRiwayatOrderButton;
     private javax.swing.JButton printRiwayatProduk;
     private javax.swing.JButton refreshButton;
-    private javax.swing.JButton refreshButton2;
     private javax.swing.JTable tableOrder;
     private javax.swing.JTextField textDesaKecamatan;
     private javax.swing.JTextField textEmail;

@@ -8,10 +8,6 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Dimas Tri Mustakim
- */
 public class DatabaseTools {
     private String user = "sa";
     private String password = "DimasTri049";

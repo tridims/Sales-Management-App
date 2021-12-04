@@ -1,16 +1,29 @@
--- a. Apa saja 5 produk dengan penjualan tertinggi dari tiap toko/pembeli (merchant)? (atau
--- pertanyaan sejenis, bisa yang bukan makanan produk dari sistem yang dibuat)
+-- A. APA SAJA 5 PRODUK DENGAN PENJUALAN TERTINGGI DARI TIAP TOKO/PEMBELI (MERCHANT)? (ATAU
+-- PERTANYAAN SEJENIS, BISA YANG BUKAN MAKANAN PRODUK DARI SISTEM YANG DIBUAT)
 
 -- 5 PRODUK PENJUALAN TERTINGGI DARI SETIAP KATEGORI
 
 
+-- ##################################################################################################
 
--- b. Apa 5 toko yang memiliki penjualan tertinggi dalam kurun waktu terakhir? (atau pertanyaan
--- sejenis, bisa yang bukan toko tergantung dari sistem yang dibuat)
+-- B. APA 5 TOKO YANG MEMILIKI PENJUALAN TERTINGGI DALAM KURUN WAKTU TERAKHIR? (ATAU PERTANYAAN
+-- SEJENIS, BISA YANG BUKAN TOKO TERGANTUNG DARI SISTEM YANG DIBUAT)
 
 -- 5 SUPPLIER YANG PALING BANYAK MENSUPPLY PRODUK DALAM KURUN WAKTU TERAKHIR
-
-
+go
+create proc supplier_teraktif
+as
+declare @tanggalsebulanlalu date = dateadd(month, -1, convert(date, getdate()));
+with temp(id_supplier, jumlah_produk)
+as
+    (select top 5 id_supplier, sum(jumlah_produk) as jumlah_produk
+    from supplied_product
+    where supplied_product.tanggal >= @tanggalsebulanLalu
+    group by id_supplier
+    order by jumlah_produk desc)
+select nama_supplier, jumlah_produk
+from temp t join supplier s
+on t.id_supplier = s.id_supplier
 
 -- ##################################################################################################
 -- 5 KARYAWAN YANG PALING BANYAK MENANGANI ORDER DALAM KURUN WAKTU TERAKHIR

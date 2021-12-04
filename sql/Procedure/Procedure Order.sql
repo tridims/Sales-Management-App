@@ -66,3 +66,79 @@ as
 update order_product
 set status_order=@status
 where order_id=@id
+
+
+-- VAREL Y. S
+-- ORDER PRODUCT BARU -> VAREL
+go
+create procedure new_order_product 
+    @date date, @status bit, @idPel int, @idProd int as
+insert into order_product values(@date, @status, @idPel, @idProd)
+go
+
+-- ORDERED PRODUCT BARU -> VAREL
+create procedure new_ordered_product 
+    @order_id int, @product_id int, @kuantitas int, @harga int
+as
+insert into ordered_product 
+values (@order_id, @product_id, @kuantitas, @harga)
+go
+
+
+-- DETAIL ORDERED PRODUCT -> VAREL
+create procedure get_ordered_product_detail @order_id int as
+select * from ordered_product op join produk p on op.product_id=p.product_id
+where op.order_id=@order_id
+go
+
+-- DELETE ORDERED PRODUCT -> VAREL
+create procedure delete_ordered_product 
+	@order_id int, @product_id int as
+delete from ordered_product where order_id=@order_id and product_id=@product_id
+go
+
+-- DETAIL ORDERED PRODUCT (KHUSUS UNTUK MENCARI PRODUCT_ID) -> VAREL
+create procedure get_ordered_product_detail2 @order_id int, @namaProduk varChar(30) as
+select op.product_id from ordered_product op join produk p on op.product_id=p.product_id
+where op.order_id=@order_id and p.nama_produk=@namaProduk
+go
+
+-- TRANSACT DELETE ORDERAN -> VAREL
+create procedure delete_order_product 
+	@order_id int 
+as
+delete from order_product where order_id=@order_id
+
+-- UPDATE STOK PRODUK -> VAREL
+create procedure update_stok_produk @product_id int, @jumlah int as
+update produk set jumlah_stok=(jumlah_stok-@jumlah) where product_id=@product_id
+go
+
+
+--GET RIWAYAT PESANAN -> GAFFY
+go
+create proc get_riwayatPesanan
+	@id_pelanggan int
+as
+select order_id, tanggal_kirim, status_order
+from order_product where id_pelanggan = @id_pelanggan;
+
+--GET DETAIL PESANAN -> GAFFY
+go
+create proc get_detailpesanan
+	@order_id int
+as
+select op.order_id,p.product_id, p.nama_produk, p.kategori, op.harga_product, op.kuantitas, (op.harga_product* op.kuantitas)as subtotal
+from ordered_product op
+join produk p on p.product_id = op.product_id
+where op.order_id = @order_id;
+
+
+--GET PESANAN AKTIF -> GAFFY
+go
+create proc get_pesananaktif
+	@id_pelanggan int
+as
+select tanggal_kirim, order_id
+from order_product
+where id_pelanggan = @id_pelanggan and status_order = 0;
