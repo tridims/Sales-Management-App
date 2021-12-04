@@ -565,8 +565,8 @@ public class customerPesan extends javax.swing.JFrame {
 
     private void buttonKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKeluarActionPerformed
         int index = tabelPesanan.getSelectedRow();
-        String namaProduk="'"+tabelPesanan.getModel().getValueAt(index, 0).toString()+"'";
-        String query1=String.format("exec get_ordered_product_detail2 %s, %s", order_id, namaProduk);
+        String namaProduk = "'"+tabelPesanan.getModel().getValueAt(index, 0).toString()+"'";
+        String query1 = String.format("exec get_ordered_product_detail2 %s, %s", order_id, namaProduk);
         try {
             ResultSet rs=db.runQuery(query1);
             int product_id=-1;
@@ -587,11 +587,12 @@ public class customerPesan extends javax.swing.JFrame {
     private void buttonPesanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonPesanMouseClicked
         String query=String.format("select * from ordered_product where order_id=%s",order_id);
         try {
+
             ResultSet rs=db.runQuery(query);
             while(rs.next()){
                 int product_id=rs.getInt("product_id");
                 int jumlah=rs.getInt("kuantitas");
-                String queryUpdate=String.format("exec update_stok_produk %s, %s",product_id, jumlah);
+                String queryUpdate = String.format("exec update_stok_produk %s, %s",product_id, jumlah);
                 db.runUpdateQuery(queryUpdate);
             }
             populateTabelProduk();
@@ -611,7 +612,6 @@ public class customerPesan extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(customerPesan.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_buttonBatalPesanMouseClicked
 
     private void buttonMasukMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonMasukMouseClicked
