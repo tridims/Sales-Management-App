@@ -1,11 +1,11 @@
--- MENGAMBIL DATA PRODUK (TABEL MENU ADMIN)
+-- MENGAMBIL DATA PRODUK (TABEL MENU ADMIN) -> Dimas T.M
 go
 create procedure get_data_tabel_produk
 as
 select product_id, nama_produk, jumlah_stok, harga_satuan, kategori from produk
 go
 
--- MELAKUKAN PENCARIAN PRODUK
+-- MELAKUKAN PENCARIAN PRODUK -> Dimas T.M
 go
 create procedure cari_produk
     @masukan varchar(253)
@@ -16,7 +16,7 @@ from produk
 where nama_produk like @pola or jumlah_stok like @pola or
     harga_satuan like @pola or kategori like @pola
 
--- DATA SPESIFIK PRODUK
+-- DATA SPESIFIK PRODUK -> Dimas T.M
 go
 create procedure get_detail_produk @idProduk int
 as
@@ -26,7 +26,7 @@ where produk.product_id = @idProduk
 go
 
 
--- UPDATE DETAIL PRODUCT
+-- UPDATE DETAIL PRODUCT -> Dimas T.M
 go
 create procedure update_detail_product 
     @id int,
@@ -47,7 +47,7 @@ set nama_produk = @nama,
 where product_id = @id
 
 
--- TAMBAH PRODUK BARU
+-- TAMBAH PRODUK BARU -> Dimas T.M
 go
 create proc new_product 
     @nama varchar(255),
@@ -62,7 +62,7 @@ values (@nama, @jumlah, @harga, @desc, @nutrition, @kat);
 go
 
 
--- DELETE PRODUCT
+-- DELETE PRODUCT -> Dimas T.M
 go
 create procedure delete_product @id int
 as

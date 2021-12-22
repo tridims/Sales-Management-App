@@ -1,11 +1,11 @@
--- VIEW UNTUK SUBTOTAL DI ORDERED PRODUCT
+-- VIEW UNTUK SUBTOTAL DI ORDERED PRODUCT -> Dimas T.M
 go
 create view subtotal as
 select order_id, product_id, harga_product * kuantitas as subtotal
 from ordered_product
 go
 
--- VIEW TOTAL DI ORDER PRODUCT
+-- VIEW TOTAL DI ORDER PRODUCT -> Dimas T.M
 create view total as
 select op.order_id, coalesce(st.total, 0) as total 
 from (
@@ -18,7 +18,7 @@ order_product as op
 on st.order_id=op.order_id
 go
 
--- VIEW UMUR
+-- VIEW UMUR -> Dimas T.M
 create view umur as
 select id_pelanggan, datediff(year, tanggal_lahir, getdate()) as umur
 from customer_profile

@@ -1,4 +1,4 @@
--- MENGAMBIL SUPPLIED PRODUCT DARI SUPPLIER TERTENTU
+-- MENGAMBIL SUPPLIED PRODUCT DARI SUPPLIER TERTENTU -> Dimas T.M
 go
 create procedure get_supplied_product @id_supplier int
 as
@@ -8,7 +8,7 @@ join produk p on p.product_id=sp.product_id
 where sp.id_supplier = @id_supplier
 
 
--- MENAMBAH SUPPLIED_PRODUCT BARU
+-- MENAMBAH SUPPLIED_PRODUCT BARU -> Dimas T.M
 go
 create procedure add_supplied_product
     @idProduk int,
@@ -34,7 +34,7 @@ begin catch
 end catch
 
 
--- MENGHAPUS SUPPLIED_PRODUCT
+-- MENGHAPUS SUPPLIED_PRODUCT -> Dimas T.M
 go
 create procedure delete_supplied_product
     @id int

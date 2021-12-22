@@ -1,11 +1,11 @@
--- DELETE RIWAYAT PESANAN (ORDER) -> DIMAS
+-- DELETE RIWAYAT PESANAN (ORDER) -> DIMAS T.M
 go
 create procedure delete_order @id int
 as
 delete from order_product where order_id = @id
 
 
--- MENDAPATKAN DAFTAR PRODUK PADA SUATU ORDER -> DIMAS
+-- MENDAPATKAN DAFTAR PRODUK PADA SUATU ORDER -> DIMAS T.M
 go
 create procedure get_list_product_from_order @orderId int
 as
@@ -16,7 +16,7 @@ join subtotal s on op.order_id=s.order_id and op.product_id=s.product_id
 where op.order_id = @orderId
 
 
--- MENDAPATKAN DAFTAR ODER DARI SUATU PELANGGAN -> DIMAS
+-- MENDAPATKAN DAFTAR ODER DARI SUATU PELANGGAN -> DIMAS T.M
 go
 create procedure get_order_pelanggan @idPelanggan int
 as
@@ -26,7 +26,7 @@ where op.id_pelanggan=@idPelanggan
 order by tanggal_kirim asc
 
 
--- MENDAPATKAN DATA ORDER MASUK (Semua, selesai, belum selesai) -> DIMAS
+-- MENDAPATKAN DATA ORDER MASUK (Semua, selesai, belum selesai) -> DIMAS T.M
 go
 create procedure get_data_order_masuk
 as
@@ -57,7 +57,7 @@ where op.status_order=1
 order by op.tanggal_kirim desc
 
 
--- SET STATUS ORDER -> DIMAS
+-- SET STATUS ORDER -> DIMAS T.M
 go
 create procedure set_status_order
     @id int,
@@ -68,14 +68,14 @@ set status_order=@status
 where order_id=@id
 
 
--- ORDER PRODUCT BARU -> VAREL
+-- ORDER PRODUCT BARU -> VAREL Y.S
 go
 create procedure new_order_product 
     @date date, @status bit, @idPel int, @idProd int as
 insert into order_product values(@date, @status, @idPel, @idProd)
 go
 
--- ORDERED PRODUCT BARU -> VAREL
+-- ORDERED PRODUCT BARU -> VAREL Y.S
 create procedure new_ordered_product 
     @order_id int, @product_id int, @kuantitas int, @harga int
 as
@@ -84,19 +84,19 @@ values (@order_id, @product_id, @kuantitas, @harga)
 go
 
 
--- DETAIL ORDERED PRODUCT -> VAREL
+-- DETAIL ORDERED PRODUCT -> VAREL Y.S
 create procedure get_ordered_product_detail @order_id int as
 select * from ordered_product op join produk p on op.product_id=p.product_id
 where op.order_id=@order_id
 go
 
--- DELETE ORDERED PRODUCT -> VAREL
+-- DELETE ORDERED PRODUCT -> VAREL Y.S
 create procedure delete_ordered_product 
 	@order_id int, @product_id int as
 delete from ordered_product where order_id=@order_id and product_id=@product_id
 go
 
--- DETAIL ORDERED PRODUCT (KHUSUS UNTUK MENCARI PRODUCT_ID) -> VAREL
+-- DETAIL ORDERED PRODUCT (KHUSUS UNTUK MENCARI PRODUCT_ID) -> VAREL Y.S
 create procedure get_ordered_product_detail2 
 	@order_id int, @namaProduk varChar(30) 
 as
@@ -104,13 +104,13 @@ select op.product_id from ordered_product op join produk p on op.product_id=p.pr
 where op.order_id=@order_id and p.nama_produk=@namaProduk
 go
 
--- DELETE ORDERAN -> VAREL
+-- DELETE ORDERAN -> VAREL Y.S
 create procedure delete_order_product 
 	@order_id int 
 as
 delete from order_product where order_id=@order_id
 
--- UPDATE STOK PRODUK -> VAREL
+-- UPDATE STOK PRODUK -> VAREL Y.S
 go
 create procedure update_stok_produk 
 	@product_id int, @jumlah int 
@@ -119,7 +119,7 @@ update produk set jumlah_stok=(jumlah_stok-@jumlah) where product_id=@product_id
 go
 
 
---GET RIWAYAT PESANAN -> GAFFY
+--GET RIWAYAT PESANAN -> GAFFY R.M.A
 go
 create proc get_riwayatPesanan
 	@id_pelanggan int
@@ -127,7 +127,7 @@ as
 select order_id, tanggal_kirim, status_order
 from order_product where id_pelanggan = @id_pelanggan;
 
---GET DETAIL PESANAN -> GAFFY
+--GET DETAIL PESANAN -> GAFFY R.M.A
 go
 create proc get_detailpesanan
 	@order_id int
@@ -138,7 +138,7 @@ join produk p on p.product_id = op.product_id
 where op.order_id = @order_id;
 
 
---GET PESANAN AKTIF -> GAFFY
+--GET PESANAN AKTIF -> GAFFY R.M.A
 go
 create proc get_pesananaktif
 	@id_pelanggan int

@@ -20,7 +20,7 @@ from(
 -- B. APA 5 TOKO YANG MEMILIKI PENJUALAN TERTINGGI DALAM KURUN WAKTU TERAKHIR? (ATAU PERTANYAAN
 -- SEJENIS, BISA YANG BUKAN TOKO TERGANTUNG DARI SISTEM YANG DIBUAT)
 
--- 5 SUPPLIER YANG PALING BANYAK MENSUPPLY PRODUK DALAM KURUN WAKTU TERAKHIR -> GAFFY
+-- 5 SUPPLIER YANG PALING BANYAK MENSUPPLY PRODUK DALAM KURUN WAKTU TERAKHIR -> GAFFY R.M.A
 go
 create proc supplier_teraktif
 as
@@ -39,7 +39,7 @@ on t.id_supplier = s.id_supplier
 exec supplier_teraktif
 
 -- ##################################################################################################
--- 5 KARYAWAN YANG PALING BANYAK MENANGANI ORDER DALAM KURUN WAKTU TERAKHIR -> DIMAS
+-- 5 KARYAWAN YANG PALING BANYAK MENANGANI ORDER DALAM KURUN WAKTU TERAKHIR -> DIMAS T.M
 
 go
 create procedure karyawan_teraktif_sebulan_terakhir
@@ -62,7 +62,7 @@ join cabang c on k.id_cabang=c.id_cabang
 -- c. Apa 3 barang yang paling banyak dibeli berbarengan dengan pembelian ‘sesuatu’? (atau
 -- pertanyaan sejenis, bisa yang bukan makanan tergantung dari sistem yang dibuat)
 
--- 3 BARANG YANG PALING BANYAK DIBELI BERSAMAAN DENGAN PRODUK BUAH APEL -> VAREL
+-- 3 BARANG YANG PALING BANYAK DIBELI BERSAMAAN DENGAN PRODUK BUAH APEL -> VAREL Y.S
 -- @BENDA ITU PRODUCT_ID-NYA BENDA YANG AKAN DIPASANGKAN, 
 -- MISALNYA 3 BENDA TERLARIS YANG DIJUAL BERSAMAN DENGAN APEL
 -- @BENDA MENJADI PRODUCT_ID NYA APEL

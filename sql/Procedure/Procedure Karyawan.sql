@@ -1,4 +1,4 @@
--- MENGAMBIL DATA KARYAWAN (MENU ADMIN)
+-- MENGAMBIL DATA KARYAWAN -> DIMAS T.M
 go
 create proc get_data_karyawan
 as
@@ -10,7 +10,7 @@ left outer join jabatan j on j.nama_jabatan=k.jabatan
 go
 
 
--- MENGAMBIL DATA KARYAWAN PADA SUATU CABANG
+-- MENGAMBIL DATA KARYAWAN PADA SUATU CABANG -> DIMAS T.M
 go
 create procedure get_karyawan_at_cabang @idCabang int
 as
@@ -20,7 +20,7 @@ where k.id_cabang = @idCabang
 go
 
 
--- TAMBAH KARYAWAN BARU
+-- TAMBAH KARYAWAN BARU -> DIMAS T.M
 go
 create procedure add_karyawan
     @nama varchar(255),
@@ -36,14 +36,14 @@ insert into karyawan (nama, jenis_kelamin, tanggal_lahir, nomor_hp, email, alama
 values (@nama, @jenisKelamin, @tanggalLahir, @nomor, @email, @alamat, @cabang, @jabatan);
 
 
--- HAPUS KARYAWAN
+-- HAPUS KARYAWAN -> DIMAS T.M
 go
 create procedure delete_karyawan @id int
 as
 delete from karyawan where id_karyawan = @id
 
 
--- UPDATE KARYAWAN
+-- UPDATE KARYAWAN -> DIMAS T.M
 go
 create procedure update_karyawan
     @id int,
@@ -62,7 +62,7 @@ set nama = @nama, jenis_kelamin = @jenisKelamin, tanggal_lahir = @tanggalLahir,
 where id_karyawan = @id
 
 
--- SEARCH KARYAWAN
+-- SEARCH KARYAWAN -> DIMAS T.M
 go
 create procedure cari_karyawan 
     @masukan varchar(255)

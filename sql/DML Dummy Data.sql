@@ -1,3 +1,5 @@
+-- > ACHMAD ICHDAFAZA R (sebagian besar) & GAFFY R.M.S
+
 use project
 
 delete from supplier;
@@ -84,29 +86,29 @@ insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition
 insert into produk (nama_produk, jumlah_stok, harga_satuan, deskripsi, nutrition_facts, kategori) values ('Blackcurrant', 100, 6500, 'snack yang berasal dari blackcurrant', 'kalori 190', 'snack buah');
 
 --TABEL SUPPLIED PRODUCT
-insert into supplied_product values (1, 4, 50, '2020-12-31');
-insert into supplied_product values (2, 2, 25, '2020-12-31');
-insert into supplied_product values (3, 3, 45, '2020-12-31');
-insert into supplied_product values (4, 4, 10, '2020-12-31');
-insert into supplied_product values (5, 6, 23, '2020-12-31');
-insert into supplied_product values (1, 1, 20, '2021-01-02');
-insert into supplied_product values (2, 2, 43, '2021-01-18');
-insert into supplied_product values (6, 6, 15, '2021-01-19');
-insert into supplied_product values (1, 1, 76, '2021-01-20');
-insert into supplied_product values (7, 7, 26, '2021-02-20');
-insert into supplied_product values (8, 8, 100, '2021-02-20');
-insert into supplied_product values (9, 9, 126, '2021-02-20');
-insert into supplied_product values (10, 1, 146, '2021-03-20');
-insert into supplied_product values (11, 2, 150, '2021-03-20');
-insert into supplied_product values (12, 3, 158, '2021-03-20');
-insert into supplied_product values (13, 4, 159, '2021-04-20');
-insert into supplied_product values (14, 1, 160, '2021-04-20');
-insert into supplied_product values (15, 9, 170, '2021-05-20');
-insert into supplied_product values (16, 10, 200, '2021-06-20');
-insert into supplied_product values (17, 7, 187, '2021-06-20');
-insert into supplied_product values (18, 1, 78, '2021-07-20');
-insert into supplied_product values (19, 2, 301, '2021-08-20');
-insert into supplied_product values (20, 3, 255, '2021-09-20');
+insert into supplied_product values (1, 4, 50, '2020-11-30');
+insert into supplied_product values (2, 2, 25, '2020-11-30');
+insert into supplied_product values (3, 3, 45, '2020-11-30');
+insert into supplied_product values (4, 4, 10, '2020-11-30');
+insert into supplied_product values (5, 6, 23, '2020-11-30');
+insert into supplied_product values (1, 1, 20, '2021-12-03');
+insert into supplied_product values (2, 2, 43, '2021-12-03');
+insert into supplied_product values (6, 6, 15, '2021-12-03');
+insert into supplied_product values (1, 1, 76, '2021-12-03');
+insert into supplied_product values (7, 7, 26, '2021-10-20');
+insert into supplied_product values (8, 8, 100, '2021-11-20');
+insert into supplied_product values (9, 9, 126, '2021-11-20');
+insert into supplied_product values (10, 1, 146, '2021-11-11');
+insert into supplied_product values (11, 2, 150, '2021-11-12');
+insert into supplied_product values (12, 3, 158, '2021-11-15');
+insert into supplied_product values (13, 4, 159, '2021-11-19');
+insert into supplied_product values (14, 1, 160, '2021-11-17');
+insert into supplied_product values (15, 9, 170, '2021-11-13');
+insert into supplied_product values (16, 10, 200, '2021-11-23');
+insert into supplied_product values (17, 7, 187, '2021-11-20');
+insert into supplied_product values (18, 1, 78, '2021-11-20');
+insert into supplied_product values (19, 2, 301, '2021-12-04');
+insert into supplied_product values (20, 3, 255, '2021-12-04');
 
 
 --

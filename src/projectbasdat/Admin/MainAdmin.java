@@ -1393,7 +1393,7 @@ public class MainAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCariSupplierActionPerformed
 
     private void buttonCariSupplier1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariSupplier1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_buttonCariSupplier1ActionPerformed
 
     private void buttonCariBarangPalingBanyakDibeliDenganSesuatuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCariBarangPalingBanyakDibeliDenganSesuatuActionPerformed

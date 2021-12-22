@@ -1,4 +1,4 @@
--- TAMBAH CUSTOMER BARU
+-- TAMBAH CUSTOMER BARU -> Dimas T.M
 go
 create procedure add_customer
     @email varchar(50), @password varchar(255),
@@ -25,7 +25,7 @@ begin catch
 end catch
 
 
--- DELETING CUSTOMER
+-- DELETING CUSTOMER -> Dimas T.M
 go
 create procedure delete_customer
     @id int
@@ -47,7 +47,7 @@ begin catch
 end catch
 
 
--- MENGAMBIL DATA PELANGGAN (MENU ADMIN)
+-- MENGAMBIL DATA PELANGGAN -> Dimas T.M
 go
 create proc get_data_pelanggan
 as
@@ -90,7 +90,7 @@ set nama_pelanggan=@nama, tanggal_lahir=@tgl,
 where id_pelanggan=@id
 
 
--- MENDAPATKAN DATA PELANGGAN SPESIFIK -> Varel
+-- MENDAPATKAN DATA PELANGGAN SPESIFIK -> Varel Y.S
 go
 create procedure get_specific_pelanggan @id int
 as
@@ -102,7 +102,7 @@ on ca.id_pelanggan=cp.id_pelanggan
 where ca.id_pelanggan = @id
 
 
--- MENCARI PELANGGAN -> Varel
+-- MENCARI PELANGGAN -> Varel Y.S
 go
 create procedure cari_pelanggan
     @masukan varchar(100)
@@ -122,7 +122,7 @@ where nama_pelanggan like @kataKunci or
     alamat like @kataKunci
 
 
--- EDIT PROFIL + AKUN PELANGGAN -> Varel
+-- EDIT PROFIL + AKUN PELANGGAN -> Varel Y.S
 go
 create procedure edit_profile_customer
     @id int, @email varchar(100), @password varchar(40),
@@ -150,7 +150,7 @@ begin catch
 end catch
 go
 
---TAMBAH AKUN PELANGGAN -> Gaffy
+--TAMBAH AKUN PELANGGAN -> Gaffy R.M.A
 go
 create procedure add_customer_account
 	@email varchar(50),
@@ -159,7 +159,7 @@ as
 insert into customer_account (email, password)
 values (@email, @password);
 
--- TAMBAH PROFIL PELANGGAN -> Gaffy
+-- TAMBAH PROFIL PELANGGAN -> Gaffy R.M.A
 go
 create proc add_customer_profile
 	@id_pelanggan int,

@@ -1,4 +1,4 @@
--- MENGAMBIL DATA SUPPLIER
+-- MENGAMBIL DATA SUPPLIER -> Dimas T.M
 go
 create proc get_data_supplier
 as
@@ -7,7 +7,7 @@ select s.id_supplier, s.nama_supplier, s.alamat, s.nomor_hp, s.email,
 from supplier s
 go
 
--- MENGAMBIL DATA SUPPLIER SPECIFIC
+-- MENGAMBIL DATA SUPPLIER SPECIFIC -> Dimas T.M
 go
 create procedure get_specific_supplier @id int
 as
@@ -15,7 +15,7 @@ select nama_supplier, alamat, nomor_hp, email, kode_pos from supplier
 where id_supplier = @id
 
 
--- TAMBAH SUPPLIER
+-- TAMBAH SUPPLIER -> Dimas T.M
 go
 create procedure new_supplier
     @nama varchar(255),
@@ -28,7 +28,7 @@ insert into supplier (nama_supplier, alamat, nomor_hp, email, kode_pos)
 values (@nama, @alamat, @nomor, @email, @pos);
 
 
--- UPDATE DATA SUPPLIER
+-- UPDATE DATA SUPPLIER -> Dimas T.M
 go
 create procedure update_supplier
     @id int,
@@ -47,14 +47,14 @@ set nama_supplier = @nama,
 where id_supplier = @id
 
 
--- MENGHAPUS SUPPLIER
+-- MENGHAPUS SUPPLIER -> Dimas T.M
 go
 create procedure delete_supplier @id int
 as
 delete from supplier where id_supplier = @id
 
 
--- MENCARI SUPPLIER
+-- MENCARI SUPPLIER -> Dimas T.M
 go
 create procedure cari_supplier
     @masukan varchar(253)

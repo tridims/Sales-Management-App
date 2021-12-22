@@ -1,3 +1,4 @@
+-- TRIGGER TAMBAH STOK PRODUK KETIKA ADA DATA SUPPLIED PRODUCT DITAMBAH -> DIMAS T.M
 go
 create trigger tambah_stok_produk
 on supplied_product
@@ -8,6 +9,7 @@ as
     from inserted
     where produk.product_id = inserted.product_id
 
+-- TRIGGER KURANGI STOK PRODUK KETIKA ADA DATA SUPPLIED PRODUCT DIHAPUS -> DIMAS T.M
 go 
 create trigger kurangi_stok_produk
 on supplied_product
@@ -18,6 +20,7 @@ as
     from deleted 
     where produk.product_id = deleted.product_id)
 
+-- TRIGGER TAMBAH STOK PRODUK KETIKA ADA DATA ORDER DIHAPUS/DIBATALKAN -> DIMAS T.M
 go 
 create trigger kurangi_stok_dari_batal_order
 on ordered_product
